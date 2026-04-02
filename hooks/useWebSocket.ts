@@ -1,5 +1,4 @@
-import { TradeEvent } from "@/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type ConnectionStatus = 0 | 1 | 3;
 
@@ -18,11 +17,15 @@ export function useWebSocket(symbol: string): {
     });
 
     ws.addEventListener("open", () => {
-      setStatus(ws.OPEN);
+      setStatus(WebSocket.OPEN);
     });
 
     ws.addEventListener("close", () => {
-      setStatus(ws.CLOSED);
+      setStatus(WebSocket.CLOSED);
+    });
+
+    ws.addEventListener("error", (e) => {
+      console.log(e);
     });
 
     return () => ws.close();
