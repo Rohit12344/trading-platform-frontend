@@ -134,8 +134,8 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 - [x] Fetch historical klines on mount via `getKlines()`
 - [x] Convert `SingleKlineBar[]` → `CandleStickData[]` (÷1000 for time)
 - [x] Render candlestick series with lightweight-charts
-- [ ] Subscribe to `{symbol}@kline_1m` WebSocket stream
-- [ ] Update chart with `.update()` on new kline (no re-render)
+- [x] Subscribe to `{symbol}@kline_1m` WebSocket stream
+- [x] Update chart with `.update()` on new kline (no re-render)
 - [ ] Timeframe selector (1m, 5m, 1h, 1d, 1w) updates chart data
 - [ ] Chart is responsive
 

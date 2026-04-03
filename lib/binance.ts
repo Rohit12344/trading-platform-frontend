@@ -163,13 +163,15 @@ export function convertKlineToCandlestick(
   };
 }
 
-export function convertKlineEventToCandlestick(k: KlineEvent): CandlestickData {
+export function convertKlineEventToCandlestick(
+  data: KlineEvent,
+): CandlestickData {
   const {
     k: { t: time, o: open, h: high, l: low, c: close },
-  } = k;
+  } = data;
 
   return {
-    time: (Number(time) / 1000) as UTCTimestamp,
+    time: Number(time) as UTCTimestamp,
     open: Number(open),
     high: Number(high),
     low: Number(low),

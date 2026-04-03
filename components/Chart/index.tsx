@@ -1,7 +1,11 @@
 "use client";
 
-import { convertKlineToCandlestick, getKlines } from "@/lib/binance";
-import { CandleStickData } from "@/types";
+import {
+  convertKlineEventToCandlestick,
+  convertKlineToCandlestick,
+  getKlines,
+} from "@/lib/binance";
+import { CandleStickData, KlineEvent } from "@/types";
 import {
   CandlestickSeries,
   createChart,
@@ -55,6 +59,19 @@ function Chart() {
     return () => chart?.remove();
   }, []);
 
+  useEffect(() => {
+    const wsStream = new WebSocket(
+      `wss://stream.testnet.binance.vision/ws/btcusdt@kline_1m`,
+    );
+
+    wsStream.addEventListener("message", (event) => {
+      const response = JSON.parse(event.data);
+      const candleStick = convertKlineEventToCandlestick(response);
+      seriesRef.current?.update(candleStick);
+    });
+
+    return () => wsStream.close();
+  }, [seriesRef]);
   return (
     <div className="w-full h-[500px] chartContainer" ref={containerRef}></div>
   );
