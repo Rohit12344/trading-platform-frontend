@@ -10,10 +10,10 @@
 ```
 Phase 0 → Environment & Foundations     ✅ DONE
 Phase 1 → Project Scaffold              ✅ DONE
-Phase 2 → TypeScript Types              🔄 IN PROGRESS
-Phase 3 → Binance API Utilities         ⬜ NOT STARTED
-Phase 4 → WebSocket Hook                ⬜ NOT STARTED
-Phase 5 → Candlestick Chart             ⬜ NOT STARTED
+Phase 2 → TypeScript Types              ✅ DONE
+Phase 3 → Binance API Utilities         ✅ DONE
+Phase 4 → WebSocket Hook                ✅ DONE
+Phase 5 → Candlestick Chart             🔄 IN PROGRESS
 Phase 6 → Order Entry Panel             ⬜ NOT STARTED
 Phase 7 → Positions / Orders / Trades   ⬜ NOT STARTED
 Phase 8 → Symbol Switching              ⬜ NOT STARTED
@@ -130,10 +130,10 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 
 **Goal:** A working chart that shows historical candles and updates live.
 
-- [ ] `useRef` to attach chart to DOM element
-- [ ] Fetch historical klines on mount via `getKlines()`
-- [ ] Convert `SingleKlineBar[]` → `CandleStickData[]` (÷1000 for time)
-- [ ] Render candlestick series with lightweight-charts
+- [x] `useRef` to attach chart to DOM element
+- [x] Fetch historical klines on mount via `getKlines()`
+- [x] Convert `SingleKlineBar[]` → `CandleStickData[]` (÷1000 for time)
+- [x] Render candlestick series with lightweight-charts
 - [ ] Subscribe to `{symbol}@kline_1m` WebSocket stream
 - [ ] Update chart with `.update()` on new kline (no re-render)
 - [ ] Timeframe selector (1m, 5m, 1h, 1d, 1w) updates chart data

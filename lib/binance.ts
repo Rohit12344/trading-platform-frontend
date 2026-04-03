@@ -1,11 +1,15 @@
 import {
   AccountInfo,
+  CandleStickData,
   KlineData,
+  KlineEvent,
   Order,
   OrderFormState,
+  SingleKlineBar,
   TimeFrame,
   Trade,
 } from "@/types";
+import { CandlestickData, UTCTimestamp } from "lightweight-charts";
 
 export async function signRequest(
   queryString: string,
@@ -145,9 +149,30 @@ export async function placeOrder({
   return response.json() as Promise<Order>;
 }
 
-placeOrder({
-  symbol: "aasfd",
-  side: "BUY",
-  type: "LIMIT",
-  quantity: "56",
-});
+export function convertKlineToCandlestick(
+  kline: SingleKlineBar,
+): CandleStickData {
+  const [time, open, high, low, close] = kline;
+
+  return {
+    time: (Number(time) / 1000) as UTCTimestamp,
+    open: Number(open),
+    high: Number(high),
+    low: Number(low),
+    close: Number(close),
+  };
+}
+
+export function convertKlineEventToCandlestick(k: KlineEvent): CandlestickData {
+  const {
+    k: { t: time, o: open, h: high, l: low, c: close },
+  } = k;
+
+  return {
+    time: (Number(time) / 1000) as UTCTimestamp,
+    open: Number(open),
+    high: Number(high),
+    low: Number(low),
+    close: Number(close),
+  };
+}
