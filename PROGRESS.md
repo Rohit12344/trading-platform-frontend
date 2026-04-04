@@ -13,8 +13,8 @@ Phase 1 → Project Scaffold              ✅ DONE
 Phase 2 → TypeScript Types              ✅ DONE
 Phase 3 → Binance API Utilities         ✅ DONE
 Phase 4 → WebSocket Hook                ✅ DONE
-Phase 5 → Candlestick Chart             🔄 IN PROGRESS
-Phase 6 → Order Entry Panel             ⬜ NOT STARTED
+Phase 5 → Candlestick Chart             ✅ DONE
+Phase 6 → Order Entry Panel             🔄 IN PROGRESS
 Phase 7 → Positions / Orders / Trades   ⬜ NOT STARTED
 Phase 8 → Symbol Switching              ⬜ NOT STARTED
 Phase 9 → Settings Page (API Keys)      ⬜ NOT STARTED
@@ -136,8 +136,8 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 - [x] Render candlestick series with lightweight-charts
 - [x] Subscribe to `{symbol}@kline_1m` WebSocket stream
 - [x] Update chart with `.update()` on new kline (no re-render)
-- [ ] Timeframe selector (1m, 5m, 1h, 1d, 1w) updates chart data
-- [ ] Chart is responsive
+- [x] Timeframe selector (1m, 5m, 1h, 1d, 1w) updates chart data
+- [x] Chart is responsive
 
 **Concepts to research before starting:**
 
@@ -255,6 +255,4 @@ Before you consider this project done, make sure you can answer these out loud:
 
 ## Current Status
 
-**Last updated:** Phase 2 in progress
-**Blocking issue:** Complete remaining types (`ApiConfig`, `OrderFormState`, union types)
-**Next action:** Finish `types/index.ts`, then move to `lib/binance.ts`
+**Last updated:** Phase 6 in progress

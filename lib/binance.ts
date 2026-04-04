@@ -171,7 +171,7 @@ export function convertKlineEventToCandlestick(
   } = data;
 
   return {
-    time: Number(time) as UTCTimestamp,
+    time: (Number(time) / 1000) as UTCTimestamp,
     open: Number(open),
     high: Number(high),
     low: Number(low),

@@ -5,16 +5,18 @@ import {
   convertKlineToCandlestick,
   getKlines,
 } from "@/lib/binance";
-import { CandleStickData, KlineEvent } from "@/types";
+import { CandleStickData, TimeFrame } from "@/types";
 import {
   CandlestickSeries,
   createChart,
   IChartApi,
   ISeriesApi,
 } from "lightweight-charts";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import TimeFrameSelector from "../TimeFrameSelector";
 
 function Chart() {
+  const [timeframe, setTimeframe] = useState<TimeFrame>("1m");
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | undefined>(undefined);
@@ -39,9 +41,13 @@ function Chart() {
     seriesRef.current = series;
     chartRef.current = chart;
 
+    return () => chart?.remove();
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getKlines("BTCUSDT", "1m", 100);
+        const data = await getKlines("BTCUSDT", timeframe, 100);
 
         const candleData: CandleStickData[] = [];
 
@@ -49,19 +55,17 @@ function Chart() {
           const candleStick = convertKlineToCandlestick(kline);
           candleData.push(candleStick);
         }
-        series?.setData(candleData);
+        seriesRef.current?.setData(candleData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-
-    return () => chart?.remove();
-  }, []);
+  }, [timeframe]);
 
   useEffect(() => {
     const wsStream = new WebSocket(
-      `wss://stream.testnet.binance.vision/ws/btcusdt@kline_1m`,
+      `wss://stream.testnet.binance.vision/ws/btcusdt@kline_${timeframe}`,
     );
 
     wsStream.addEventListener("message", (event) => {
@@ -71,9 +75,13 @@ function Chart() {
     });
 
     return () => wsStream.close();
-  }, [seriesRef]);
+  }, [timeframe]);
+
   return (
-    <div className="w-full h-[500px] chartContainer" ref={containerRef}></div>
+    <>
+      <TimeFrameSelector onSet={setTimeframe} currentVal={timeframe} />
+      <div className="w-full h-125 chartContainer" ref={containerRef}></div>
+    </>
   );
 }
 
