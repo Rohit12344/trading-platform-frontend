@@ -14,12 +14,14 @@ import {
 } from "lightweight-charts";
 import { useEffect, useRef, useState } from "react";
 import TimeFrameSelector from "../TimeFrameSelector";
+import { useAccountStore } from "@/store";
 
 function Chart() {
   const [timeframe, setTimeframe] = useState<TimeFrame>("1m");
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | undefined>(undefined);
+  const symbol = useAccountStore((state) => state.symbol);
 
   useEffect(() => {
     const chartOptions = {
@@ -47,7 +49,7 @@ function Chart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getKlines("BTCUSDT", timeframe, 100);
+        const data = await getKlines(symbol, timeframe, 100);
 
         const candleData: CandleStickData[] = [];
 
@@ -61,11 +63,11 @@ function Chart() {
       }
     };
     fetchData();
-  }, [timeframe]);
+  }, [timeframe, symbol]);
 
   useEffect(() => {
     const wsStream = new WebSocket(
-      `wss://stream.testnet.binance.vision/ws/btcusdt@kline_${timeframe}`,
+      `wss://stream.testnet.binance.vision/ws/${symbol.toLowerCase()}@kline_${timeframe}`,
     );
 
     wsStream.addEventListener("message", (event) => {
@@ -75,13 +77,16 @@ function Chart() {
     });
 
     return () => wsStream.close();
-  }, [timeframe]);
+  }, [timeframe, symbol]);
 
   return (
-    <>
+    <div className="col-span-2 w-full border border-gray-700 p-6 rounded-4xl">
       <TimeFrameSelector onSet={setTimeframe} currentVal={timeframe} />
-      <div className="w-full h-125 chartContainer" ref={containerRef}></div>
-    </>
+      <div
+        className="w-full h-125 sm:h-3/5 chartContainer"
+        ref={containerRef}
+      ></div>
+    </div>
   );
 }
 

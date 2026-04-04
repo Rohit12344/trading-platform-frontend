@@ -1,4 +1,4 @@
-function Button({
+function Tab({
   onClick,
   content,
   isSelected,
@@ -9,7 +9,7 @@ function Button({
 }) {
   return (
     <button
-      className={` border border-gray-500 w-fit px-3 py-2 cursor-pointer first:rounded-l-4xl last:rounded-r-4xl hover:bg-gray-900 ${isSelected ? "bg-gray-700" : " "}`}
+      className={`px-3 py-2 cursor-pointer hover:bg-gray-900  ${isSelected ? "underline underline-offset-6 " : " "}`}
       onClick={isSelected ? undefined : onClick}
     >
       {content}
@@ -17,4 +17,4 @@ function Button({
   );
 }
 
-export default Button;
+export default Tab;
