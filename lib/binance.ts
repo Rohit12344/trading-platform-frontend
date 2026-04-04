@@ -76,7 +76,7 @@ export async function getKlines(
 }
 
 export async function getAccountInfo(): Promise<AccountInfo> {
-  const signedUrl = await buildSignedUrl("/api/v3/account");
+  const signedUrl = await buildSignedUrl("api/v3/account");
   const response = await fetch(signedUrl, {
     headers: {
       "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,

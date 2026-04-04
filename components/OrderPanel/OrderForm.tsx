@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Input from "../Input/input";
 
 function OrderForm({ type }: { type: string }) {
@@ -32,7 +32,7 @@ function OrderForm({ type }: { type: string }) {
             value={qty ?? ""}
             onInputChange={(e) => setQty(e.target.value)}
           ></Input>
-          <span className="mr-4">USDT</span>
+          <span className="mr-4">BTC</span>
         </div>
       </div>
 
@@ -44,7 +44,7 @@ function OrderForm({ type }: { type: string }) {
             type="number"
             className="border-0 flex-1 focus:outline-0"
             value={(Number(price ?? 0) * Number(qty ?? 0)).toString()}
-            onInputChange={(e) => setPrice(e.target.value)}
+            readOnly
           ></Input>
           <span className="mr-4">USDT</span>
         </div>
