@@ -1,10 +1,8 @@
 import {
-  AccountInfo,
   CandleStickData,
   KlineData,
   KlineEvent,
   Order,
-  OrderFormState,
   SingleKlineBar,
   TimeFrame,
   Trade,
@@ -79,7 +77,7 @@ export async function getKlines(
 //   const signedUrl = await buildSignedUrl("api/v3/account");
 //   const response = await fetch(signedUrl, {
 //     headers: {
-//       "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
+//       "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
 //     },
 //   });
 //   if (!response.ok) {
@@ -95,7 +93,7 @@ export async function getOpenOrders(symbol?: string): Promise<Order[]> {
   );
   const response = await fetch(signedUrl, {
     headers: {
-      "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
+      "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
     },
   });
   if (!response.ok) {
@@ -108,7 +106,7 @@ export async function getTradeHistory(symbol: string): Promise<Trade[]> {
   const signedUrl = await buildSignedUrl("/api/v3/myTrades", { symbol });
   const response = await fetch(signedUrl, {
     headers: {
-      "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
+      "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
     },
   });
   if (!response.ok) {

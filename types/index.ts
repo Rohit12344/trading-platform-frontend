@@ -124,3 +124,8 @@ export interface Trade {
   qty: string;
   time: number;
 }
+
+export interface OrderErrorResponse {
+  code: string;
+  msg: string;
+}

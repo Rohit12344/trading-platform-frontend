@@ -14,8 +14,8 @@ Phase 2 → TypeScript Types              ✅ DONE
 Phase 3 → Binance API Utilities         ✅ DONE
 Phase 4 → WebSocket Hook                ✅ DONE
 Phase 5 → Candlestick Chart             ✅ DONE
-Phase 6 → Order Entry Panel             🔄 IN PROGRESS
-Phase 7 → Positions / Orders / Trades   ⬜ NOT STARTED
+Phase 6 → Order Entry Panel             ✅ DONE
+Phase 7 → Positions / Orders / Trades   🔄 IN PROGRESS
 Phase 8 → Symbol Switching              ⬜ NOT STARTED
 Phase 9 → Settings Page (API Keys)      ⬜ NOT STARTED
 Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
@@ -255,4 +255,4 @@ Before you consider this project done, make sure you can answer these out loud:
 
 ## Current Status
 
-**Last updated:** Phase 6 in progress
+**Last updated:** Phase 7 in progress

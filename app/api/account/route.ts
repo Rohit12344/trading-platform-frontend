@@ -4,7 +4,7 @@ export async function GET() {
   const signedUrl = await buildSignedUrl("api/v3/account");
   const response = await fetch(signedUrl, {
     headers: {
-      "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
+      "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
     },
   });
   if (!response.ok) {

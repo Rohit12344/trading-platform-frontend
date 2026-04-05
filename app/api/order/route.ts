@@ -9,47 +9,48 @@ export async function POST(req: NextRequest) {
     params[key] = value;
   }
 
-  const signedUrl = await buildSignedUrl("api/v3/order", params);
   try {
+    const signedUrl = await buildSignedUrl("api/v3/order", params);
+
     const response = await fetch(signedUrl, {
       method: "POST",
       headers: {
-        "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
+        "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
       },
     });
+
     const data = await response.json();
-    console.log(data);
-    return Response.json(data);
-  } catch (e) {
-    console.log(e);
+
+    if (!response.ok) {
+      return Response.json(
+        { error: data.msg ?? "Bad Order Request." },
+        {
+          status: response.status,
+          statusText: response.statusText,
+        },
+      );
+    }
+
+    return Response.json(data, {
+      status: response.status,
+      statusText: response.statusText,
+    });
+  } catch (e: unknown) {
+    if (e && e instanceof Error) {
+      console.error(e);
+      return Response.json(
+        { error: `${e.name} : ${e.message}` },
+        {
+          status: 500,
+        },
+      );
+    }
+
+    return Response.json(
+      { error: "Error while placing the order." },
+      {
+        status: 500,
+      },
+    );
   }
 }
-
-// export async function placeOrder({
-//   symbol,
-//   side,
-//   type,
-//   timeInForce,
-//   quantity,
-//   price,
-// }: OrderFormState & LimitOrderParam): Promise<Order> {
-//   const params =
-//     type === "MARKET"
-//       ? { symbol, side, type, quantity }
-//       : { symbol, side, type, quantity, timeInForce, price };
-
-//   const signedUrl = await buildSignedUrl(
-//     "/api/v3/order",
-//     params as Record<string, string>,
-//   );
-//   const response = await fetch(signedUrl, {
-//     method: "POST",
-//     headers: {
-//       "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
-//     },
-//   });
-//   if (!response.ok) {
-//     throw new Error(`Response status: ${response.status}`);
-//   }
-//   return response.json() as Promise<Order>;
-// }
