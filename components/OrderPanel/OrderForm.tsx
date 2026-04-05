@@ -104,6 +104,7 @@ function OrderForm({
         content={`${side} BTC`}
         className="w-full rounded-4xl col-span-2"
         type="submit"
+        disabled={!price || !qty}
       ></Button>
     </form>
   );
