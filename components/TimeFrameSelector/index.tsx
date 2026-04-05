@@ -11,7 +11,7 @@ function TimeFrameSelector({
   currentVal: TimeFrame;
 }) {
   return (
-    <div className="my-4">
+    <div>
       {TimeFrames.map((timeframe) => (
         <Button
           isSelected={timeframe === currentVal}

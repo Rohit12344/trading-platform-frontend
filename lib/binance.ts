@@ -117,37 +117,37 @@ export async function getTradeHistory(symbol: string): Promise<Trade[]> {
   return response.json() as Promise<Trade[]>;
 }
 
-interface LimitOrderParam {
-  timeInForce?: "GTC" | "IOC" | "FOK";
-}
-export async function placeOrder({
-  symbol,
-  side,
-  type,
-  timeInForce,
-  quantity,
-  price,
-}: OrderFormState & LimitOrderParam): Promise<Order> {
-  const params =
-    type === "MARKET"
-      ? { symbol, side, type, quantity }
-      : { symbol, side, type, quantity, timeInForce, price };
+// interface LimitOrderParam {
+//   timeInForce?: "GTC" | "IOC" | "FOK";
+// }
+// export async function placeOrder({
+//   symbol,
+//   side,
+//   type,
+//   timeInForce,
+//   quantity,
+//   price,
+// }: OrderFormState & LimitOrderParam): Promise<Order> {
+//   const params =
+//     type === "MARKET"
+//       ? { symbol, side, type, quantity }
+//       : { symbol, side, type, quantity, timeInForce, price };
 
-  const signedUrl = await buildSignedUrl(
-    "/api/v3/order",
-    params as Record<string, string>,
-  );
-  const response = await fetch(signedUrl, {
-    method: "POST",
-    headers: {
-      "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-  return response.json() as Promise<Order>;
-}
+//   const signedUrl = await buildSignedUrl(
+//     "/api/v3/order",
+//     params as Record<string, string>,
+//   );
+//   const response = await fetch(signedUrl, {
+//     method: "POST",
+//     headers: {
+//       "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
+//     },
+//   });
+//   if (!response.ok) {
+//     throw new Error(`Response status: ${response.status}`);
+//   }
+//   return response.json() as Promise<Order>;
+// }
 
 export function convertKlineToCandlestick(
   kline: SingleKlineBar,

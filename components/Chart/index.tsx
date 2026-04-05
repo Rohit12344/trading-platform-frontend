@@ -80,10 +80,14 @@ function Chart() {
   }, [timeframe, symbol]);
 
   return (
-    <div className="col-span-2 w-full border border-gray-700 p-6 rounded-4xl">
-      <TimeFrameSelector onSet={setTimeframe} currentVal={timeframe} />
+    <div className="w-full h-full p-6 flex flex-col gap-5">
+      <div className="flex justify-between align-top">
+        <h2>BTCUSDT</h2>
+        <TimeFrameSelector onSet={setTimeframe} currentVal={timeframe} />
+      </div>
+
       <div
-        className="w-full h-125 sm:h-3/5 chartContainer"
+        className="w-full h-125 sm:h-full chartContainer"
         ref={containerRef}
       ></div>
     </div>

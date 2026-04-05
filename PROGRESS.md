@@ -161,9 +161,9 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 - [x] Price input (hidden for Market orders)
 - [x] Total auto-calculation (quantity × price)
 - [x] Available balance display (from `getAccountInfo()`)
-- [ ] Place Order button → calls `placeOrder()` → shows confirmation
-- [ ] Loading state on button while order is processing
-- [ ] Error handling if order fails
+- [x] Place Order button → calls `placeOrder()` → shows confirmation
+- [x] Loading state on button while order is processing
+- [x] Error handling if order fails
 
 ---
 
