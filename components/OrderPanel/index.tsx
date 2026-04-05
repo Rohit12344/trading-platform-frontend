@@ -8,7 +8,6 @@ import Tab from "../Tab";
 import OrderForm from "./OrderForm";
 
 import { Balance } from "../../types/index";
-import { IoWalletSharp } from "react-icons/io5";
 
 function OrderPanel() {
   const [orderSide, setOrderSide] = useState<OrderSide>("BUY");
@@ -25,7 +24,12 @@ function OrderPanel() {
         }
 
         const { balances }: { balances: Balance[] } = await res.json();
-        setBalance(`${balances[4].free} ${balances[4].asset}`);
+        const concernedBalance = balances.find(
+          (blnc) => blnc.asset.toLowerCase() === "usdt",
+        );
+        setBalance(
+          `${concernedBalance?.free ?? "0"} ${concernedBalance?.asset ?? "USDT"}`,
+        );
       } catch (err) {
         console.log(err);
       }
@@ -54,11 +58,12 @@ function OrderPanel() {
           ></Tab>
         ))}
       </div>
-      <OrderForm key={orderType} type={orderType} />
-      <div className="flex gap-2 items-center">
-        <IoWalletSharp />
-        <span>{balance}</span>
-      </div>
+      <OrderForm
+        key={orderType}
+        side={orderSide}
+        type={orderType}
+        balance={balance}
+      />
     </div>
   );
 }

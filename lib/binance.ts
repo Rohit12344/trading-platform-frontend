@@ -55,7 +55,7 @@ export async function buildSignedUrl(
   searchParams.append("timestamp", timestamp.toString());
   const signature = await signRequest(
     searchParams.toString(),
-    process.env.NEXT_PUBLIC_BINANCE_SECRET_KEY!,
+    process.env.BINANCE_SECRET_KEY!,
   );
 
   searchParams.append("signature", signature);
@@ -75,18 +75,18 @@ export async function getKlines(
   return response.json() as Promise<KlineData>;
 }
 
-export async function getAccountInfo(): Promise<AccountInfo> {
-  const signedUrl = await buildSignedUrl("api/v3/account");
-  const response = await fetch(signedUrl, {
-    headers: {
-      "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-  return response.json() as Promise<AccountInfo>;
-}
+// export async function getAccountInfo(): Promise<AccountInfo> {
+//   const signedUrl = await buildSignedUrl("api/v3/account");
+//   const response = await fetch(signedUrl, {
+//     headers: {
+//       "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
+//     },
+//   });
+//   if (!response.ok) {
+//     throw new Error(`Response status: ${response.status}`);
+//   }
+//   return response.json() as Promise<AccountInfo>;
+// }
 
 export async function getOpenOrders(symbol?: string): Promise<Order[]> {
   const signedUrl = await buildSignedUrl(

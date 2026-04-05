@@ -1,5 +1,4 @@
 import { buildSignedUrl } from "@/lib/binance";
-import { AccountInfo } from "@/types";
 
 export async function GET() {
   const signedUrl = await buildSignedUrl("api/v3/account");

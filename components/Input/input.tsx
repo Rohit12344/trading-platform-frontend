@@ -7,13 +7,15 @@ function Input({
   value,
   onInputChange,
   readOnly,
+  required,
 }: {
   type: string;
   name: string;
-  className: string;
+  className?: string;
   value: string;
   onInputChange?: React.ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
   readOnly?: boolean;
+  required?: boolean;
 }) {
   return (
     <input
@@ -24,6 +26,7 @@ function Input({
       value={value}
       onChange={onInputChange}
       readOnly={readOnly}
+      required={required}
     />
   );
 }

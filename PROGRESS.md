@@ -155,12 +155,12 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 **Goal:** Left panel — symbol selector, buy/sell form, place order.
 
 - [ ] Symbol selector dropdown (BTCUSDT, ETHUSDT, SOLUSDT, etc.)
-- [ ] Buy / Sell tab toggle
-- [ ] Order type selector (Market, Limit, Stop Market)
-- [ ] Quantity input
-- [ ] Price input (hidden for Market orders)
-- [ ] Total auto-calculation (quantity × price)
-- [ ] Available balance display (from `getAccountInfo()`)
+- [x] Buy / Sell tab toggle
+- [x] Order type selector (Market, Limit, Stop Market)
+- [x] Quantity input
+- [x] Price input (hidden for Market orders)
+- [x] Total auto-calculation (quantity × price)
+- [x] Available balance display (from `getAccountInfo()`)
 - [ ] Place Order button → calls `placeOrder()` → shows confirmation
 - [ ] Loading state on button while order is processing
 - [ ] Error handling if order fails
