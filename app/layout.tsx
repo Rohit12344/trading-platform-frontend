@@ -38,11 +38,17 @@ export default function RootLayout({
         <Toaster
           toastOptions={{
             style: {
-              minWidth: "500px",
+              border: "1px solid gray",
               padding: "10px",
+              color: "white",
+              backgroundColor: "rgba(211, 211, 211, 0.2)",
             },
             success: {
               removeDelay: 3000,
+              style: {
+                backgroundColor: "green",
+                color: "white",
+              },
             },
             error: {
               removeDelay: 4000,

@@ -25,6 +25,13 @@ function OrderForm({
     },
   );
 
+  const progress = Math.min(
+    ((Number(price ?? 0) * Number(qty ?? 0)) / 10000) * 100,
+    100,
+  )
+    .toFixed(2)
+    .toString();
+
   useEffect(() => {
     if (!response.ok) {
       if (!response.message) return;
@@ -37,7 +44,7 @@ function OrderForm({
   }, [response]);
 
   return (
-    <form className="grid grid-cols-2 gap-3" action={dispatchAction}>
+    <form className="grid grid-cols-2 gap-4" action={dispatchAction}>
       {type !== "MARKET" && (
         <div className="col-span-2 flex flex-col gap-2">
           <label htmlFor="price">Price</label>
@@ -115,7 +122,12 @@ function OrderForm({
         ></Input>
       )}
 
-      <div className="  flex gap-2 items-center">
+      <div className="col-span-2 flex items-center gap-4">
+        <progress className="flex-1" max="100" value={progress} />
+        <span>{progress} %</span>
+      </div>
+
+      <div className="col-span-2 flex gap-2 items-center pb-2 border-b-2 border-b-gray-400">
         <IoWalletSharp />
         <span>{balance}</span>
       </div>
