@@ -12,7 +12,7 @@ import {
   IChartApi,
   ISeriesApi,
 } from "lightweight-charts";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import TimeFrameSelector from "../TimeFrameSelector";
 import { useAccountStore } from "@/store";
 
@@ -22,6 +22,8 @@ function Chart() {
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | undefined>(undefined);
   const symbol = useAccountStore((state) => state.symbol);
+  const price = useAccountStore((state) => state.marketPrice);
+  const setMarketPrice = useAccountStore((state) => state.setMarketPrice);
 
   useEffect(() => {
     const chartOptions = {
@@ -74,15 +76,20 @@ function Chart() {
       const response = JSON.parse(event.data);
       const candleStick = convertKlineEventToCandlestick(response);
       seriesRef.current?.update(candleStick);
+      setMarketPrice(Number(response.k.c));
     });
 
     return () => wsStream.close();
-  }, [timeframe, symbol]);
+  }, [timeframe, symbol, setMarketPrice]);
 
   return (
-    <div className="w-full h-125 sm:h-100 p-6 flex flex-col gap-5">
+    <div className="border border-gray-700 rounded-4xl w-full h-125 sm:h-120 p-6 flex flex-col gap-5">
       <div className="flex justify-between align-top">
-        <h2>BTCUSDT</h2>
+        <div className="flex flex-col gap-4">
+          <h2 className="text-xl">{symbol}</h2>
+          <h1 className="text-2xl">$ {price}</h1>
+        </div>
+
         <TimeFrameSelector onSet={setTimeframe} currentVal={timeframe} />
       </div>
 

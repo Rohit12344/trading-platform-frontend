@@ -1,8 +1,22 @@
-import { OrderSide, OrderType, TimeFrame } from "@/types";
+import { OrderSide, TableTabsType, TimeFrame } from "@/types";
 
 export const TimeFrames: TimeFrame[] = ["1m", "5m", "1d", "1w"];
 export const OrderSides: OrderSide[] = ["BUY", "SELL"];
 export const OrderTypes: string[] = ["LIMIT", "MARKET", "STOP MARKET"];
+export const TableTabs: TableTabsType[] = ["Positions", "Orders", "Trades"];
+
+export const TableColumns: Record<TableTabsType, string[]> = {
+  Positions: [
+    "Symbol",
+    "Size",
+    "Entry Price",
+    "Market Price",
+    "Unrealized Pnl",
+    "Realized Pnl",
+  ],
+  Orders: [],
+  Trades: [],
+};
 
 export const errorMsg: Record<string, string> = {
   "Filter failure: PRICE_FILTER":

@@ -62,7 +62,7 @@ function OrderForm({
         </div>
       )}
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 col-span-2 lg:col-span-1">
         <label htmlFor="quantity">Quantity</label>
         <div className="border border-gray-700 flex items-center">
           <Input
@@ -77,7 +77,7 @@ function OrderForm({
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 col-span-2 lg:col-span-1">
         <label htmlFor="total">Total</label>
         <div className="border border-gray-700 flex items-center">
           <Input

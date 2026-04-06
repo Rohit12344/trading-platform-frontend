@@ -135,3 +135,14 @@ export interface StateType {
   message?: string;
   orderId?: string;
 }
+
+export type TableTabsType = "Positions" | "Orders" | "Trades";
+
+export interface PositionsTableType {
+  symbol: string;
+  size: string;
+  price: string;
+  marketPrice: number;
+  unrealizedPnl: number;
+  realizedPnl: number;
+}
