@@ -1,20 +1,11 @@
 import { useActionState, useEffect, useState } from "react";
 import Input from "../Input/input";
 import { IoWalletSharp } from "react-icons/io5";
-import { OrderSide } from "@/types";
+import { OrderSide, StateType } from "@/types";
 import Button from "../Button";
 import { placeOrder } from "@/app/actions";
 import toast from "react-hot-toast";
-
-// async function placeOrderAction(prevData: Response, formData: FormData) {
-//   const res = await placeOrder(formData);
-//   if (res.ok) {
-//     toast.success(`Order placed — ID: ${res?.orderId as string}`);
-//   } else {
-//     toast.error(res.message);
-//   }
-//   return prevData;
-// }
+import { errorMsg } from "../../constants/index";
 
 function OrderForm({
   type,
@@ -27,19 +18,22 @@ function OrderForm({
 }) {
   const [price, setPrice] = useState<string | undefined>();
   const [qty, setQty] = useState<string | undefined>();
-  const [response, dispatchAction] = useActionState(placeOrder, {});
-
-  // if (response.ok) {
-  //   toast.success(`Order placed — ID: ${response?.orderId as string}`);
-  // }
-  // else {
-  //   toast.error(response.message);
-  // }
+  const [response, dispatchAction] = useActionState<StateType, FormData>(
+    placeOrder,
+    {
+      ok: false,
+    },
+  );
 
   useEffect(() => {
-    if (response.startsWith("Order request failed")) {
-      toast.error(response);
-    } else toast.success(`Order placed — ID: ${response?.orderId as string}`);
+    if (!response.ok) {
+      if (!response.message) return;
+      toast.error(errorMsg[response.message] ?? response.message);
+    } else {
+      if (response.message) {
+        toast.success(response?.message);
+      }
+    }
   }, [response]);
 
   return (

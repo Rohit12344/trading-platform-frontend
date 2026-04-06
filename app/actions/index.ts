@@ -1,7 +1,8 @@
 "use server";
-import { errorMsg } from "@/constants";
 
-export async function placeOrder(prevState: unknown, formData: FormData) {
+import { StateType } from "@/types";
+
+export async function placeOrder(prevState: StateType, formData: FormData) {
   const params: Record<string, string> = {};
 
   for (const [key, value] of formData.entries()) {
@@ -17,16 +18,31 @@ export async function placeOrder(prevState: unknown, formData: FormData) {
         method: "POST",
       },
     );
+
     const data = await res.json();
 
     if (!res.ok) {
-      return `Order request failed: ${errorMsg[data.error] ?? data.error ?? res.statusText}`;
+      throw new Error(data.msg, {
+        cause: `"${res.status} - ${res.statusText}", "Code ${data.code}" - "${data.msg}"`,
+      });
     }
-    return data?.orderId;
+
+    return {
+      ok: res.ok,
+      message: `Order ${data.orderId} successfully placed`,
+    };
   } catch (err: unknown) {
+    console.error(err);
     if (err && err instanceof Error) {
-      console.error(err.message);
+      return {
+        ok: false,
+        message: err.message,
+      };
     }
-    return "Order request failed: Error in placing the order";
+
+    return {
+      ok: false,
+      message: "Error while placing the order",
+    };
   }
 }

@@ -129,3 +129,9 @@ export interface OrderErrorResponse {
   code: string;
   msg: string;
 }
+
+export interface StateType {
+  ok: boolean;
+  message?: string;
+  orderId?: string;
+}

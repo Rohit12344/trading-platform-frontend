@@ -19,38 +19,17 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    if (!response.ok) {
+      return Response.json(await response.json(), {
+        status: response.status,
+        statusText: response.statusText,
+      });
+    }
     const data = await response.json();
 
-    if (!response.ok) {
-      return Response.json(
-        { error: data.msg ?? "Bad Order Request." },
-        {
-          status: response.status,
-          statusText: response.statusText,
-        },
-      );
-    }
-
-    return Response.json(data, {
-      status: response.status,
-      statusText: response.statusText,
-    });
+    return Response.json(data);
   } catch (e: unknown) {
-    if (e && e instanceof Error) {
-      console.error(e);
-      return Response.json(
-        { error: `${e.name} : ${e.message}` },
-        {
-          status: 500,
-        },
-      );
-    }
-
-    return Response.json(
-      { error: "Error while placing the order." },
-      {
-        status: 500,
-      },
-    );
+    console.error(e);
+    return Response.error();
   }
 }
