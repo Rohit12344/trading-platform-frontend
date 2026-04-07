@@ -12,7 +12,7 @@ import {
   IChartApi,
   ISeriesApi,
 } from "lightweight-charts";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TimeFrameSelector from "../TimeFrameSelector";
 import { useAccountStore } from "@/store";
 
@@ -35,6 +35,7 @@ function Chart() {
         vertLines: { color: "#1e2330" },
         horzLines: { color: "#1e2330" },
       },
+      autoSize: true,
     };
     const chart = containerRef.current
       ? createChart(containerRef.current, chartOptions)
@@ -83,7 +84,7 @@ function Chart() {
   }, [timeframe, symbol, setMarketPrice]);
 
   return (
-    <div className="border border-gray-700 rounded-4xl w-full h-125 sm:h-120 p-6 flex flex-col gap-5">
+    <div className="border border-gray-700 rounded-4xl w-full  p-6 flex flex-col gap-5">
       <div className="flex justify-between align-top">
         <div className="flex flex-col gap-4">
           <h2 className="text-xl">{symbol}</h2>
@@ -93,7 +94,10 @@ function Chart() {
         <TimeFrameSelector onSet={setTimeframe} currentVal={timeframe} />
       </div>
 
-      <div className="w-full h-full chartContainer" ref={containerRef}></div>
+      <div
+        className="w-full h-[30vh] sm:h-[40vh] chartContainer"
+        ref={containerRef}
+      ></div>
     </div>
   );
 }
