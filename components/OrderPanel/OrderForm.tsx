@@ -11,10 +11,12 @@ function OrderForm({
   type,
   side,
   balance,
+  orderSymbol,
 }: {
   type: string;
   side: OrderSide;
   balance: string;
+  orderSymbol: string;
 }) {
   const [price, setPrice] = useState<string | undefined>();
   const [qty, setQty] = useState<string | undefined>();
@@ -24,6 +26,8 @@ function OrderForm({
       ok: false,
     },
   );
+  const assetName = orderSymbol.replace("USDT", "");
+  console.log(assetName);
 
   const progress = Math.min(
     ((Number(price ?? 0) * Number(qty ?? 0)) / 10000) * 100,
@@ -73,7 +77,7 @@ function OrderForm({
             onInputChange={(e) => setQty(e.target.value)}
             required
           ></Input>
-          <span className="mr-4">BTC</span>
+          <span className="mr-4">{assetName}</span>
         </div>
       </div>
 
@@ -107,7 +111,7 @@ function OrderForm({
       ></Input>
       <Input
         name="symbol"
-        value={"BTCUSDT"}
+        value={orderSymbol}
         className="hidden"
         type="text"
         readOnly
@@ -133,7 +137,7 @@ function OrderForm({
       </div>
 
       <Button
-        content={`${side} BTC`}
+        content={`${side} ${assetName}`}
         className="w-full rounded-4xl col-span-2"
         type="submit"
         disabled={type !== "MARKET" ? !price || !qty : !qty}

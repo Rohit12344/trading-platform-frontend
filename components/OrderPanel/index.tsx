@@ -2,18 +2,22 @@
 
 import { useEffect, useState } from "react";
 import Button from "../Button";
-import { OrderSides, OrderTypes } from "@/constants";
+import { OrderSides, OrderTypes, Symbols } from "@/constants";
 import { OrderSide } from "@/types";
 import Tab from "../Tab";
 import OrderForm from "./OrderForm";
 
 import { Balance } from "../../types/index";
 import Dropdown from "../Dropdown";
+import { useAccountStore } from "@/store";
 
 function OrderPanel() {
   const [orderSide, setOrderSide] = useState<OrderSide>("BUY");
   const [orderType, setOrderType] = useState<string>("LIMIT");
   const [balance, setBalance] = useState<string>("0.00 USDT");
+
+  const symbol = useAccountStore((state) => state.symbol);
+  const setSymbol = useAccountStore((state) => state.setSymbol);
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -25,9 +29,12 @@ function OrderPanel() {
         }
 
         const { balances }: { balances: Balance[] } = await res.json();
+
         const concernedBalance = balances.find(
           (blnc) => blnc.asset.toLowerCase() === "usdt",
         );
+        console.log(balances);
+
         setBalance(
           `${concernedBalance?.free ?? "0"} ${concernedBalance?.asset ?? "USDT"}`,
         );
@@ -42,7 +49,11 @@ function OrderPanel() {
       <Dropdown
         labelName="Symbol"
         className="border-b border-b-gray-700 pb-4 flex flex-col gap-2"
-        options={["Test 1", "Test 2"]}
+        options={Symbols}
+        value={symbol}
+        onChange={(val) => {
+          setSymbol(val);
+        }}
       />
       <div>
         {OrderSides.map((side) => (
@@ -65,6 +76,7 @@ function OrderPanel() {
         ))}
       </div>
       <OrderForm
+        orderSymbol={symbol}
         key={orderType}
         side={orderSide}
         type={orderType}

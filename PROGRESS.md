@@ -154,7 +154,7 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 
 **Goal:** Left panel — symbol selector, buy/sell form, place order.
 
-- [ ] Symbol selector dropdown (BTCUSDT, ETHUSDT, SOLUSDT, etc.)
+- [x] Symbol selector dropdown (BTCUSDT, ETHUSDT, SOLUSDT, etc.)
 - [x] Buy / Sell tab toggle
 - [x] Order type selector (Market, Limit, Stop Market)
 - [x] Quantity input

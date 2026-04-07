@@ -12,7 +12,6 @@ export const TableColumns: Record<TableTabsType, string[]> = {
     "Entry Price",
     "Market Price",
     "Unrealized Pnl",
-    "Realized Pnl",
   ],
   Orders: [],
   Trades: [],
@@ -56,3 +55,13 @@ export const errorMsg: Record<string, string> = {
   "Filter failure: EXCHANGE_MAX_NUM_ORDER_LISTS":
     "Account has too many open order lists on the exchange.",
 };
+
+export const Symbols = [
+  "BTCUSDT",
+  "ETHUSDT",
+  "SOLUSDT",
+  "DOGEUSDT",
+  "BNBUSDT",
+  "XRPUSDT",
+  "TRXUSDT",
+];

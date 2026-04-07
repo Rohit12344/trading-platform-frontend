@@ -4,7 +4,7 @@ import { TableColumns, TableTabs } from "@/constants";
 import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { PositionsTableType, TableTabsType, Trade } from "@/types";
-import Table from "../Table";
+import Table from "@/components/Table";
 import { useAccountStore } from "@/store";
 import PositionTable from "../Table/PositionTable";
 
@@ -12,6 +12,7 @@ function Tabs() {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
   const [tableData, setTableData] = useState<PositionsTableType[]>();
 
+  const symbol = useAccountStore((state) => state.symbol);
   const marketPrice = useAccountStore((state) => state.marketPrice);
   const currentSymbolPrice = useRef(marketPrice);
   currentSymbolPrice.current = marketPrice;
@@ -19,7 +20,7 @@ function Tabs() {
   useEffect(() => {
     const fetchAccountInfo = async () => {
       const searchParams = new URLSearchParams();
-      searchParams.append("symbol", "BTCUSDT");
+      searchParams.append("symbol", symbol);
       try {
         const res = await fetch(`/api/trades?${searchParams.toString()}`);
 
@@ -58,7 +59,6 @@ function Tabs() {
                   ? (currentSymbolPrice.current - Number(p.price)) *
                     Number(p.qty)
                   : 0,
-                realizedPnl: 0,
               };
             }),
           );
@@ -68,7 +68,7 @@ function Tabs() {
       }
     };
     fetchAccountInfo();
-  }, [currentTab]);
+  }, [currentTab, symbol]);
   return (
     <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto">
       <div className="p-6">

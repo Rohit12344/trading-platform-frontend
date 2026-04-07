@@ -36,7 +36,6 @@ function PositionTable({ data }: { data: PositionsTableType[] | undefined }) {
           >
             {d.unrealizedPnl}
           </td>
-          <td className="py-3">{d.realizedPnl}</td>
         </tr>
       ))}
     </>

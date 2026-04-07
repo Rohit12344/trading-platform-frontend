@@ -144,5 +144,4 @@ export interface PositionsTableType {
   price: string;
   marketPrice: number;
   unrealizedPnl: number;
-  realizedPnl: number;
 }
