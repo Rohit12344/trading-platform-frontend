@@ -171,12 +171,12 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 
 **Goal:** Bottom right table with three tabs.
 
-- [ ] Tab switcher: Positions / Orders / Trades
-- [ ] Positions tab — fetch from API, show symbol, size, entry price, PnL
+- [x] Tab switcher: Positions / Orders / Trades
+- [x] Positions tab — fetch from API, show symbol, size, entry price, PnL
 - [ ] Orders tab — fetch open orders, show status
 - [ ] Trades tab — fetch trade history
 - [ ] Real-time price updates in Positions via WebSocket
-- [ ] Color coded PnL (green positive, red negative)
+- [x] Color coded PnL (green positive, red negative)
 
 ---
 

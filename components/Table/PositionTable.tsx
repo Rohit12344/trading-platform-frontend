@@ -2,12 +2,27 @@ import { PositionsTableType } from "@/types";
 
 function PositionTable({ data }: { data: PositionsTableType[] | undefined }) {
   if (data === undefined) {
-    return;
+    return (
+      <tr>
+        <th colSpan={6} className="py-3">
+          Loading...
+        </th>
+      </tr>
+    );
+  }
+  if (!data.length) {
+    return (
+      <tr>
+        <th colSpan={6} className="py-3">
+          No data found.
+        </th>
+      </tr>
+    );
   }
   return (
     <>
       {data?.map((d) => (
-        <tr key={`${d.symbol}}`} className="text-center">
+        <tr key={`${d.symbol} ${d.price}`} className="text-center">
           <td className="py-3">{d.symbol}</td>
           <td
             className={`py-3  ${d.size.startsWith("+") ? "text-green-500" : "text-red-500"}`}

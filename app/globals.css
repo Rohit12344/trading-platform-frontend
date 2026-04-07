@@ -24,4 +24,9 @@
     background-color: purple;
     border-radius: 8px;
   }
+
+  ::picker(select) {
+    background: oklch(98% 0 0);
+    color: oklch(20% 0.05 300);
+  }
 }

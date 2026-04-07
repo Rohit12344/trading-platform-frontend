@@ -8,6 +8,7 @@ import Tab from "../Tab";
 import OrderForm from "./OrderForm";
 
 import { Balance } from "../../types/index";
+import Dropdown from "../Dropdown";
 
 function OrderPanel() {
   const [orderSide, setOrderSide] = useState<OrderSide>("BUY");
@@ -38,6 +39,11 @@ function OrderPanel() {
   }, []);
   return (
     <div className="border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 hover:shadow-gray-800 hover:shadow-lg transition delay-150">
+      <Dropdown
+        labelName="Symbol"
+        className="border-b border-b-gray-700 pb-4 flex flex-col gap-2"
+        options={["Test 1", "Test 2"]}
+      />
       <div>
         {OrderSides.map((side) => (
           <Button

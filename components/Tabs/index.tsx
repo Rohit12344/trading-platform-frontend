@@ -1,7 +1,7 @@
 "use client";
 
 import { TableColumns, TableTabs } from "@/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { PositionsTableType, TableTabsType, Trade } from "@/types";
 import Table from "../Table";
@@ -11,7 +11,10 @@ import PositionTable from "../Table/PositionTable";
 function Tabs() {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
   const [tableData, setTableData] = useState<PositionsTableType[]>();
+
   const marketPrice = useAccountStore((state) => state.marketPrice);
+  const currentSymbolPrice = useRef(marketPrice);
+  currentSymbolPrice.current = marketPrice;
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -26,6 +29,23 @@ function Tabs() {
 
         const data: Trade[] = await res.json();
 
+        // data.reduce((prev, curr) => {
+        //   if (prev.symbol === curr.symbol) {
+        //     return {
+        //       symbol: prev.symbol,
+        //       size: prev.isBuyer
+        //         ? `+${Number(prev.qty) + Number(curr.qty)}`
+        //         : `-${curr.qty}`,
+        //       price: Number(prev.price) + curr.price,
+        //       marketPrice: currentSymbolPrice.current,
+        //       unrealizedPnl: p.isBuyer
+        //         ? (currentSymbolPrice.current - Number(p.price)) * Number(p.qty)
+        //         : 0,
+        //       realizedPnl: 0,
+        //     };
+        //   }
+        // });
+
         if (currentTab === "Positions") {
           setTableData(
             data.map((p: Trade) => {
@@ -33,9 +53,10 @@ function Tabs() {
                 symbol: p.symbol,
                 size: p.isBuyer ? `+${p.qty}` : `-${p.qty}`,
                 price: p.price,
-                marketPrice: marketPrice,
+                marketPrice: currentSymbolPrice.current,
                 unrealizedPnl: p.isBuyer
-                  ? (marketPrice - Number(p.price)) * Number(p.qty)
+                  ? (currentSymbolPrice.current - Number(p.price)) *
+                    Number(p.qty)
                   : 0,
                 realizedPnl: 0,
               };
@@ -47,7 +68,7 @@ function Tabs() {
       }
     };
     fetchAccountInfo();
-  }, [currentTab, marketPrice]);
+  }, [currentTab]);
   return (
     <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto">
       <div className="p-6">
