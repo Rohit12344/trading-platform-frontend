@@ -6,6 +6,7 @@ import Button from "../Button";
 import { PositionsTableType, TableTabsType, Trade } from "@/types";
 import Table from "../Table";
 import { useAccountStore } from "@/store";
+import PositionTable from "../Table/PositionTable";
 
 function Tabs() {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
@@ -48,7 +49,7 @@ function Tabs() {
     fetchAccountInfo();
   }, [currentTab, marketPrice]);
   return (
-    <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150">
+    <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto">
       <div className="p-6">
         {TableTabs.map((tab) => (
           <Button
@@ -60,7 +61,14 @@ function Tabs() {
         ))}
       </div>
 
-      <Table columns={TableColumns[currentTab]} data={tableData!}></Table>
+      <Table
+        columns={TableColumns[currentTab]}
+        render={() => {
+          if (currentTab === "Positions") {
+            return <PositionTable data={tableData}></PositionTable>;
+          }
+        }}
+      ></Table>
     </div>
   );
 }
