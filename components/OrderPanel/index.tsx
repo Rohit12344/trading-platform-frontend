@@ -37,7 +37,7 @@ function OrderPanel() {
     fetchAccountInfo();
   }, []);
   return (
-    <div className="border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 ">
+    <div className="border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 hover:shadow-gray-800 hover:shadow-lg transition delay-150">
       <div>
         {OrderSides.map((side) => (
           <Button

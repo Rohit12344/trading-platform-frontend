@@ -7,7 +7,7 @@ function Table({
   data: PositionsTableType[];
 }) {
   return (
-    <table className="w-full">
+    <table className="w-full ">
       <thead className="border-y border-y-gray-500 ">
         <tr>
           {columns.map((column) => (

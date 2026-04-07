@@ -48,7 +48,7 @@ function Tabs() {
     fetchAccountInfo();
   }, [currentTab, marketPrice]);
   return (
-    <div className="border border-gray-700 rounded-4xl flex flex-col">
+    <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150">
       <div className="p-6">
         {TableTabs.map((tab) => (
           <Button
