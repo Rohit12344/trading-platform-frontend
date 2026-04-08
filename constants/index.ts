@@ -14,7 +14,7 @@ export const TableColumns: Record<TableTabsType, string[]> = {
     "Unrealized Pnl",
   ],
   Orders: [],
-  Trades: [],
+  Trades: ["Symbol", "Side", "Quantity", "Price", "Realized Pnl", "Time"],
 };
 
 export const errorMsg: Record<string, string> = {

@@ -69,7 +69,7 @@ function Chart() {
       }
     };
     fetchData();
-  }, [timeframe, symbol]);
+  }, [timeframe, symbol, setInitialPrice]);
 
   useEffect(() => {
     const wsStream = new WebSocket(

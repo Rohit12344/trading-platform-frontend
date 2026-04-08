@@ -57,6 +57,7 @@ export async function buildSignedUrl(
   );
 
   searchParams.append("signature", signature);
+
   return `${process.env.NEXT_PUBLIC_BINANCE_TESTNET_URL!}/${endpoint}?${searchParams.toString()}`;
 }
 

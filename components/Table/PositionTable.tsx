@@ -25,7 +25,7 @@ function PositionTable({ data }: { data: PositionsTableType[] | undefined }) {
         <tr key={`${d.symbol} ${d.price}`} className="text-center">
           <td className="py-3">{d.symbol}</td>
           <td
-            className={`py-3  ${d.size.startsWith("+") ? "text-green-500" : "text-red-500"}`}
+            className={`py-3  ${d?.size?.startsWith("+") ? "text-green-500" : "text-red-500"}`}
           >
             {d.size}
           </td>

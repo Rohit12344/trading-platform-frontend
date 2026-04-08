@@ -145,3 +145,12 @@ export interface PositionsTableType {
   marketPrice: number;
   unrealizedPnl: number;
 }
+
+export interface TradeTableType {
+  symbol: string;
+  side: OrderSide;
+  qty: string;
+  price: string;
+  realizedPnl: number;
+  time: string;
+}
