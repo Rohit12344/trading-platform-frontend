@@ -15,6 +15,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import TimeFrameSelector from "../TimeFrameSelector";
 import { useAccountStore } from "@/store";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 function Chart() {
   const [timeframe, setTimeframe] = useState<TimeFrame>("1m");
@@ -23,7 +24,9 @@ function Chart() {
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | undefined>(undefined);
   const symbol = useAccountStore((state) => state.symbol);
   const price = useAccountStore((state) => state.marketPrice);
-  const setMarketPrice = useAccountStore((state) => state.setMarketPrice);
+  const setInitialPrice = useAccountStore((state) => state.setMarketPrice);
+
+  useWebSocket(symbol.toLowerCase());
 
   useEffect(() => {
     const chartOptions = {
@@ -53,7 +56,7 @@ function Chart() {
     const fetchData = async () => {
       try {
         const data = await getKlines(symbol, timeframe, 100);
-
+        setInitialPrice(Number(data.pop()?.[4]));
         const candleData: CandleStickData[] = [];
 
         for (const kline of data) {
@@ -77,11 +80,10 @@ function Chart() {
       const response = JSON.parse(event.data);
       const candleStick = convertKlineEventToCandlestick(response);
       seriesRef.current?.update(candleStick);
-      setMarketPrice(Number(response.k.c));
     });
 
     return () => wsStream.close();
-  }, [timeframe, symbol, setMarketPrice]);
+  }, [timeframe, symbol]);
 
   return (
     <div className="border border-gray-700 rounded-4xl w-full p-6 flex flex-col gap-6 hover:shadow-gray-800 hover:shadow-lg transition delay-150">

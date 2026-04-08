@@ -33,7 +33,6 @@ function OrderPanel() {
         const concernedBalance = balances.find(
           (blnc) => blnc.asset.toLowerCase() === "usdt",
         );
-        console.log(balances);
 
         setBalance(
           `${concernedBalance?.free ?? "0"} ${concernedBalance?.asset ?? "USDT"}`,

@@ -27,7 +27,6 @@ function OrderForm({
     },
   );
   const assetName = orderSymbol.replace("USDT", "");
-  console.log(assetName);
 
   const progress = Math.min(
     ((Number(price ?? 0) * Number(qty ?? 0)) / 10000) * 100,

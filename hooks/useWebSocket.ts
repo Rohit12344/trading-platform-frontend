@@ -1,19 +1,21 @@
+import { useAccountStore } from "@/store";
 import { useEffect, useState } from "react";
 
 type ConnectionStatus = 0 | 1 | 3;
 
 export function useWebSocket(symbol: string): {
-  price: string;
   connectionStatus: ConnectionStatus;
 } {
-  const [latestPrice, setLatestPrice] = useState<string>("");
+  const setMarketPrice = useAccountStore((state) => state.setMarketPrice);
   const [status, setStatus] = useState<ConnectionStatus>(0);
 
   useEffect(() => {
-    const ws = new WebSocket(`wss://testnet.binance.vision/ws/${symbol}@trade`);
+    const ws = new WebSocket(
+      `wss://stream.testnet.binance.vision/ws/${symbol}@trade`,
+    );
     ws.addEventListener("message", (event) => {
       const { p } = JSON.parse(event.data);
-      setLatestPrice(p);
+      setMarketPrice(p);
     });
 
     ws.addEventListener("open", () => {
@@ -29,10 +31,9 @@ export function useWebSocket(symbol: string): {
     });
 
     return () => ws.close();
-  }, [symbol]);
+  }, [symbol, setMarketPrice]);
 
   return {
-    price: latestPrice,
     connectionStatus: status,
   };
 }

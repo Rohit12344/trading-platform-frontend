@@ -47,22 +47,51 @@ function Tabs() {
         //   }
         // });
 
+        const testData = data.reduce((prev, curr): Trade => {
+          if (curr.isBuyer) {
+            return {
+              symbol: curr.symbol,
+              isBuyer: curr.isBuyer,
+              price: (Number(prev.price) + Number(curr.price)).toString(),
+              qty: (Number(prev.qty) + Number(curr.qty)).toString(),
+              time: curr.time,
+            };
+          } else return prev;
+        });
+
         if (currentTab === "Positions") {
-          setTableData(
-            data.map((p: Trade) => {
-              return {
-                symbol: p.symbol,
-                size: p.isBuyer ? `+${p.qty}` : `-${p.qty}`,
-                price: p.price,
-                marketPrice: currentSymbolPrice.current,
-                unrealizedPnl: p.isBuyer
-                  ? (currentSymbolPrice.current - Number(p.price)) *
-                    Number(p.qty)
-                  : 0,
-              };
-            }),
-          );
+          setTableData([
+            {
+              symbol: testData.symbol,
+              size: `+${testData.qty}`,
+              price: testData.price,
+              marketPrice:
+                currentSymbolPrice.current > 0
+                  ? currentSymbolPrice.current
+                  : marketPrice,
+              unrealizedPnl:
+                (currentSymbolPrice.current - Number(testData.price)) *
+                Number(testData.qty),
+            },
+          ]);
         }
+
+        // if (currentTab === "Positions") {
+        //   setTableData(
+        //     data.map((p: Trade) => {
+        //       return {
+        //         symbol: p.symbol,
+        //         size: p.isBuyer ? `+${p.qty}` : `-${p.qty}`,
+        //         price: p.price,
+        //         marketPrice: currentSymbolPrice.current,
+        //         unrealizedPnl: p.isBuyer
+        //           ? (currentSymbolPrice.current - Number(p.price)) *
+        //             Number(p.qty)
+        //           : 0,
+        //       };
+        //     }),
+        //   );
+        // }
       } catch (err) {
         console.log(err);
       }
