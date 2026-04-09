@@ -1,7 +1,7 @@
 "use client";
 
 import { TableColumns, TableTabs } from "@/constants";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import {
   PositionsTableType,
@@ -45,7 +45,7 @@ function Tabs() {
       }
     };
     fetchAccountInfo();
-  }, [currentTab, symbol]);
+  }, [symbol]);
 
   useEffect(() => {
     if (fetchedData) {
@@ -70,19 +70,6 @@ function Tabs() {
             })
           : null;
 
-      const tradeData =
-        fetchedData.length > 0
-          ? fetchedData.map((trade): Trade => {
-              return {
-                symbol: trade.symbol,
-                isBuyer: trade.isBuyer,
-                price: trade.price,
-                qty: trade.qty,
-                time: trade.time,
-              };
-            })
-          : null;
-
       if (currentTab === "Positions") {
         setTableData(
           positionsData
@@ -102,24 +89,50 @@ function Tabs() {
               ]
             : [],
         );
-      } else if (currentTab === "Trades") {
+      }
+    }
+  }, [fetchedData, currentTab, marketPrice]);
+
+  useEffect(() => {
+    if (fetchedData) {
+      const aggregatedInfo: { avgEntry: number; totalQty: number } = {
+        avgEntry: 0,
+        totalQty: 0,
+      };
+
+      fetchedData.forEach((val) => {
+        if (val.isBuyer) {
+          aggregatedInfo.avgEntry =
+            (aggregatedInfo.avgEntry * aggregatedInfo.totalQty +
+              Number(val.price) * Number(val.qty)) /
+            (aggregatedInfo.totalQty + Number(val.qty));
+          aggregatedInfo.totalQty += Number(val.qty);
+        }
+      });
+
+      console.log(aggregatedInfo);
+
+      if (currentTab === "Trades") {
         setTableData(
-          tradeData
-            ? (tradeData.map((td) => {
+          fetchedData
+            ? (fetchedData.map((td) => {
                 return {
                   symbol: td.symbol,
                   side: td.isBuyer ? "BUY" : "SELL",
                   qty: td.qty,
                   price: td.price,
-                  realizedPnl: 90,
-                  time: new Date(td.time).toLocaleDateString(),
+                  realizedPnl: td.isBuyer
+                    ? 0
+                    : aggregatedInfo.avgEntry -
+                      Number(td.price) * Number(td.qty),
+                  time: new Date(td.time).toLocaleString(),
                 };
               }) as TradeTableType[])
             : [],
         );
       }
     }
-  }, [fetchedData, currentTab, marketPrice]);
+  }, [fetchedData, currentTab]);
 
   return (
     <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto">
