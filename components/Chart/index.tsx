@@ -39,6 +39,9 @@ function Chart() {
         horzLines: { color: "#1e2330" },
       },
       autoSize: true,
+      timeScale: {
+        timeVisible: true,
+      },
     };
     const chart = containerRef.current
       ? createChart(containerRef.current, chartOptions)

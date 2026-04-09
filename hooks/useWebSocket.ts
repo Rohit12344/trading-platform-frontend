@@ -1,6 +1,5 @@
 import { useAccountStore } from "@/store";
-import { useEffect, useState } from "react";
-import { useShallow } from "zustand/shallow";
+import { useCallback, useEffect, useState } from "react";
 
 type ConnectionStatus = 0 | 1 | 3;
 
@@ -8,7 +7,7 @@ export function useWebSocket(symbol: string): {
   connectionStatus: ConnectionStatus;
 } {
   const setMarketPrice = useAccountStore(
-    useShallow((state) => state.setMarketPrice),
+    useCallback((state) => state.setMarketPrice, []),
   );
   const [status, setStatus] = useState<ConnectionStatus>(0);
 

@@ -15,6 +15,7 @@ import { useAccountStore } from "@/store";
 import PositionTable from "../Table/PositionTable";
 import TradeTable from "../Table/TradeTable";
 import OrderTable from "../Table/OrderTable";
+import { useShallow } from "zustand/shallow";
 
 function Tabs() {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
@@ -24,8 +25,8 @@ function Tabs() {
     PositionsTableType[] | TradeTableType[]
   >();
 
-  const symbol = useAccountStore((state) => state.symbol);
-  const marketPrice = useAccountStore((state) => state.marketPrice);
+  const symbol = useAccountStore(useShallow((state) => state.symbol));
+  const marketPrice = useAccountStore(useShallow((state) => state.marketPrice));
   const currentSymbolPrice = useRef(marketPrice);
   currentSymbolPrice.current = marketPrice;
 
