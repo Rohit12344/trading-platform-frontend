@@ -154,3 +154,12 @@ export interface TradeTableType {
   realizedPnl: number;
   time: string;
 }
+
+export interface OrderTableType {
+  symbol: string;
+  side: OrderSide;
+  qty: string;
+  price: string;
+  status: string;
+  time: string;
+}

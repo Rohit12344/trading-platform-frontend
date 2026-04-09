@@ -1,9 +1,10 @@
 "use client";
 
 import { TableColumns, TableTabs } from "@/constants";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import {
+  Order,
   PositionsTableType,
   TableTabsType,
   Trade,
@@ -13,10 +14,12 @@ import Table from "@/components/Table";
 import { useAccountStore } from "@/store";
 import PositionTable from "../Table/PositionTable";
 import TradeTable from "../Table/TradeTable";
+import OrderTable from "../Table/OrderTable";
 
 function Tabs() {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
   const [fetchedData, setFetchedData] = useState<Trade[]>();
+  const [fetchedOrderData, setFetchedOrderData] = useState<Order[]>();
   const [tableData, setTableData] = useState<
     PositionsTableType[] | TradeTableType[]
   >();
@@ -48,10 +51,31 @@ function Tabs() {
   }, [symbol]);
 
   useEffect(() => {
+    const fetchOrders = async () => {
+      const searchParams = new URLSearchParams();
+      searchParams.append("symbol", symbol);
+      try {
+        const res = await fetch(`/api/orders?${searchParams.toString()}`);
+
+        if (!res.ok) {
+          throw new Error(`Response status: ${res.status}`);
+        }
+
+        const data: Order[] = await res.json();
+        console.log(data);
+        setFetchedOrderData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchOrders();
+  }, [symbol]);
+
+  useEffect(() => {
     if (fetchedData) {
       const positionsData =
         fetchedData.length > 0
-          ? fetchedData.reduce((prev, curr): Trade => {
+          ? fetchedData.reduce((prev, curr) => {
               return {
                 symbol: curr.symbol,
                 isBuyer: curr.isBuyer,
@@ -110,8 +134,6 @@ function Tabs() {
         }
       });
 
-      console.log(aggregatedInfo);
-
       if (currentTab === "Trades") {
         setTableData(
           fetchedData
@@ -123,8 +145,8 @@ function Tabs() {
                   price: td.price,
                   realizedPnl: td.isBuyer
                     ? 0
-                    : aggregatedInfo.avgEntry -
-                      Number(td.price) * Number(td.qty),
+                    : (Number(td.price) - aggregatedInfo.avgEntry) *
+                      Number(td.qty),
                   time: new Date(td.time).toLocaleString(),
                 };
               }) as TradeTableType[])
@@ -161,6 +183,21 @@ function Tabs() {
               <TradeTable
                 data={(tableData as TradeTableType[]) ?? []}
               ></TradeTable>
+            );
+          } else if (currentTab === "Orders") {
+            return (
+              <OrderTable
+                data={
+                  fetchedOrderData?.map((order) => ({
+                    price: order.price,
+                    qty: order.origQty,
+                    side: order.side,
+                    status: order.status,
+                    symbol: order.symbol,
+                    time: new Date(order.time).toLocaleString(),
+                  })) ?? []
+                }
+              ></OrderTable>
             );
           }
         }}

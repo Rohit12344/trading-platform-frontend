@@ -16,7 +16,7 @@ Phase 4 → WebSocket Hook                ✅ DONE
 Phase 5 → Candlestick Chart             ✅ DONE
 Phase 6 → Order Entry Panel             ✅ DONE
 Phase 7 → Positions / Orders / Trades   🔄 IN PROGRESS
-Phase 8 → Symbol Switching              ⬜ NOT STARTED
+Phase 8 → Symbol Switching              🔄 IN PROGRESS
 Phase 9 → Settings Page (API Keys)      ⬜ NOT STARTED
 Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 ```
@@ -174,8 +174,8 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 - [x] Tab switcher: Positions / Orders / Trades
 - [x] Positions tab — fetch from API, show symbol, size, entry price, PnL
 - [ ] Orders tab — fetch open orders, show status
-- [ ] Trades tab — fetch trade history
-- [ ] Real-time price updates in Positions via WebSocket
+- [x] Trades tab — fetch trade history
+- [x] Real-time price updates in Positions via WebSocket
 - [x] Color coded PnL (green positive, red negative)
 
 ---
@@ -186,11 +186,11 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 
 This is the most architecturally complex piece. It requires:
 
-- [ ] Symbol stored in shared state (lifted up to parent or Zustand store)
-- [ ] Chart unsubscribes from old WebSocket, subscribes to new
-- [ ] Chart fetches new historical data
-- [ ] Order panel reflects new symbol
-- [ ] Positions table filters or refreshes
+- [x] Symbol stored in shared state (lifted up to parent or Zustand store)
+- [x] Chart unsubscribes from old WebSocket, subscribes to new
+- [x] Chart fetches new historical data
+- [x] Order panel reflects new symbol
+- [x] Positions table filters or refreshes
 - [ ] URL updates to `/trade/BTCUSDT` (bonus)
 
 **This is what the interviewers will probe hardest on.**

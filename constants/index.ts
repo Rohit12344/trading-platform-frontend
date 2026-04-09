@@ -13,7 +13,7 @@ export const TableColumns: Record<TableTabsType, string[]> = {
     "Market Price",
     "Unrealized Pnl",
   ],
-  Orders: [],
+  Orders: ["Symbol", "Side", "Quantity", "Price", "Status", "Time"],
   Trades: ["Symbol", "Side", "Quantity", "Price", "Realized Pnl", "Time"],
 };
 
