@@ -16,18 +16,21 @@ import { useEffect, useRef, useState } from "react";
 import TimeFrameSelector from "../TimeFrameSelector";
 import { useAccountStore } from "@/store";
 import { useWebSocket } from "@/hooks/useWebSocket";
+import { useShallow } from "zustand/shallow";
+import RealTimePriceDisplay from "./RealTimePriceDisplay";
 
 function Chart() {
   const [timeframe, setTimeframe] = useState<TimeFrame>("1m");
+  const [initialPrice, setInitialPrice] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | undefined>(undefined);
-  const symbol = useAccountStore((state) => state.symbol);
-  const price = useAccountStore((state) => state.marketPrice);
-  const setInitialPrice = useAccountStore((state) => state.setMarketPrice);
+  const symbol = useAccountStore(useShallow((state) => state.symbol));
+  // const setInitialPrice = useAccountStore(
+  //   useShallow((state) => state.setMarketPrice),
+  // );
 
-  useWebSocket(symbol.toLowerCase());
-
+  const { price } = useWebSocket(symbol.toLowerCase());
   useEffect(() => {
     const chartOptions = {
       layout: {
@@ -72,7 +75,7 @@ function Chart() {
       }
     };
     fetchData();
-  }, [timeframe, symbol, setInitialPrice]);
+  }, [timeframe, symbol]);
 
   useEffect(() => {
     const wsStream = new WebSocket(
@@ -92,8 +95,10 @@ function Chart() {
     <div className="border border-gray-700 rounded-4xl w-full p-6 flex flex-col gap-6 hover:shadow-gray-800 hover:shadow-lg transition delay-150">
       <div className="flex justify-between align-top">
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl">{symbol}</h2>
-          <h1 className="text-2xl">$ {price}</h1>
+          <RealTimePriceDisplay
+            symbol={symbol}
+            price={price || initialPrice.toString()}
+          />
         </div>
 
         <TimeFrameSelector onSet={setTimeframe} currentVal={timeframe} />
