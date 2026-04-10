@@ -15,7 +15,6 @@ import { useAccountStore } from "@/store";
 import PositionTable from "../Table/PositionTable";
 import TradeTable from "../Table/TradeTable";
 import OrderTable from "../Table/OrderTable";
-import { useShallow } from "zustand/shallow";
 
 function Tabs() {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
@@ -29,6 +28,7 @@ function Tabs() {
   const marketPrice = useAccountStore((state) => state.marketPrice);
   const currentSymbolPrice = useRef(marketPrice);
   currentSymbolPrice.current = marketPrice;
+  const orderTime = useAccountStore((state) => state.lastOrderTime);
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -49,7 +49,7 @@ function Tabs() {
       }
     };
     fetchAccountInfo();
-  }, [symbol]);
+  }, [symbol, orderTime]);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -70,7 +70,7 @@ function Tabs() {
       }
     };
     fetchOrders();
-  }, [symbol]);
+  }, [symbol, orderTime]);
 
   useEffect(() => {
     if (fetchedData) {

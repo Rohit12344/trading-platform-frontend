@@ -134,6 +134,7 @@ export interface StateType {
   ok: boolean;
   message?: string;
   orderId?: string;
+  orderTime?: string;
 }
 
 export type TableTabsType = "Positions" | "Orders" | "Trades";

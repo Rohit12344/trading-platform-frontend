@@ -15,7 +15,7 @@ Phase 3 → Binance API Utilities         ✅ DONE
 Phase 4 → WebSocket Hook                ✅ DONE
 Phase 5 → Candlestick Chart             ✅ DONE
 Phase 6 → Order Entry Panel             ✅ DONE
-Phase 7 → Positions / Orders / Trades   🔄 IN PROGRESS
+Phase 7 → Positions / Orders / Trades   ✅ DONE
 Phase 8 → Symbol Switching              🔄 IN PROGRESS
 Phase 9 → Settings Page (API Keys)      ⬜ NOT STARTED
 Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
@@ -173,7 +173,7 @@ Phase 10 → Polish + README + Demo       ⬜ NOT STARTED
 
 - [x] Tab switcher: Positions / Orders / Trades
 - [x] Positions tab — fetch from API, show symbol, size, entry price, PnL
-- [ ] Orders tab — fetch open orders, show status
+- [x] Orders tab — fetch open orders, show status
 - [x] Trades tab — fetch trade history
 - [x] Real-time price updates in Positions via WebSocket
 - [x] Color coded PnL (green positive, red negative)

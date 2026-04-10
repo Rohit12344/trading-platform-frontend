@@ -37,6 +37,7 @@ export async function placeOrder(
     return {
       ok: res.ok,
       message: `Order ${data.orderId} successfully placed`,
+      orderTime: data.transactTime,
     };
   } catch (err: unknown) {
     console.error(err);

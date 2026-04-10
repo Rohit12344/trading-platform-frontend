@@ -1,4 +1,4 @@
-import { Ref, useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import Input from "../Input/input";
 import { IoWalletSharp } from "react-icons/io5";
 import { OrderSide, StateType } from "@/types";
@@ -6,6 +6,7 @@ import Button from "../Button";
 import { placeOrder } from "@/app/actions";
 import toast from "react-hot-toast";
 import { errorMsg } from "../../constants/index";
+import { useAccountStore } from "@/store";
 
 function OrderForm({
   type,
@@ -28,6 +29,7 @@ function OrderForm({
   });
   const assetName = orderSymbol.replace("USDT", "");
   const formElement = useRef<HTMLFormElement>(null);
+  const setOrderTime = useAccountStore((state) => state.setLastOrderTime);
 
   const progress = Math.min(
     ((Number(price ?? 0) * Number(qty ?? 0)) / 10000) * 100,
@@ -47,12 +49,13 @@ function OrderForm({
       if (!response?.message) return;
       toast.error(errorMsg[response.message] ?? response.message);
     } else {
-      if (response.message) {
+      if (response.message && response.orderTime) {
         toast.success(response?.message);
+        setOrderTime(response.orderTime);
         handleReset();
       }
     }
-  }, [response]);
+  }, [response, setOrderTime]);
 
   return (
     <form
