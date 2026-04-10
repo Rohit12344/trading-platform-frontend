@@ -1,14 +1,13 @@
 import { useAccountStore } from "@/store";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type ConnectionStatus = 0 | 1 | 3;
 
 export function useWebSocket(symbol: string): {
   connectionStatus: ConnectionStatus;
 } {
-  const setMarketPrice = useAccountStore(
-    useCallback((state) => state.setMarketPrice, []),
-  );
+  const setMarketPrice = useAccountStore((state) => state.setMarketPrice);
+
   const [status, setStatus] = useState<ConnectionStatus>(0);
 
   useEffect(() => {

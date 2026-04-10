@@ -2,7 +2,14 @@
 
 import { StateType } from "@/types";
 
-export async function placeOrder(prevState: StateType, formData: FormData) {
+export async function placeOrder(
+  prevState: StateType | null,
+  formData: FormData | null,
+) {
+  if (formData === null) {
+    return null;
+  }
+
   const params: Record<string, string> = {};
 
   for (const [key, value] of formData.entries()) {

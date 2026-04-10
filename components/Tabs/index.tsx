@@ -25,8 +25,8 @@ function Tabs() {
     PositionsTableType[] | TradeTableType[]
   >();
 
-  const symbol = useAccountStore(useShallow((state) => state.symbol));
-  const marketPrice = useAccountStore(useShallow((state) => state.marketPrice));
+  const symbol = useAccountStore((state) => state.symbol);
+  const marketPrice = useAccountStore((state) => state.marketPrice);
   const currentSymbolPrice = useRef(marketPrice);
   currentSymbolPrice.current = marketPrice;
 
@@ -97,7 +97,7 @@ function Tabs() {
 
       if (currentTab === "Positions") {
         setTableData(
-          positionsData
+          positionsData && positionsData.qty !== "0"
             ? [
                 {
                   symbol: positionsData.symbol,

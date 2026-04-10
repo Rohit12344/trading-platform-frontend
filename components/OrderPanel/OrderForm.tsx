@@ -1,4 +1,4 @@
-import { useActionState, useEffect, useState } from "react";
+import { Ref, useActionState, useEffect, useRef, useState } from "react";
 import Input from "../Input/input";
 import { IoWalletSharp } from "react-icons/io5";
 import { OrderSide, StateType } from "@/types";
@@ -20,13 +20,14 @@ function OrderForm({
 }) {
   const [price, setPrice] = useState<string | undefined>();
   const [qty, setQty] = useState<string | undefined>();
-  const [response, dispatchAction] = useActionState<StateType, FormData>(
-    placeOrder,
-    {
-      ok: false,
-    },
-  );
+  const [response, dispatchAction] = useActionState<
+    StateType | null,
+    FormData | null
+  >(placeOrder, {
+    ok: false,
+  });
   const assetName = orderSymbol.replace("USDT", "");
+  const formElement = useRef<HTMLFormElement>(null);
 
   const progress = Math.min(
     ((Number(price ?? 0) * Number(qty ?? 0)) / 10000) * 100,
@@ -36,18 +37,30 @@ function OrderForm({
     .toString();
 
   useEffect(() => {
-    if (!response.ok) {
-      if (!response.message) return;
+    function handleReset() {
+      setPrice(undefined);
+      setQty(undefined);
+      formElement.current?.reset();
+    }
+
+    if (!response?.ok) {
+      if (!response?.message) return;
       toast.error(errorMsg[response.message] ?? response.message);
     } else {
       if (response.message) {
         toast.success(response?.message);
+        handleReset();
       }
     }
   }, [response]);
 
   return (
-    <form className="grid grid-cols-2 gap-4" action={dispatchAction}>
+    <form
+      className="grid grid-cols-2 gap-4"
+      action={dispatchAction}
+      ref={formElement}
+      key={type}
+    >
       {type !== "MARKET" && (
         <div className="col-span-2 flex flex-col gap-2">
           <label htmlFor="price">Price</label>
