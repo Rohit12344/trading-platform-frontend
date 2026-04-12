@@ -15,7 +15,7 @@ export function useWebSocket(symbol: string): {
     );
     ws.addEventListener("message", (event) => {
       if (ws.readyState !== WebSocket.OPEN) return;
-      const { p, E } = JSON.parse(event.data);
+      const { p } = JSON.parse(event.data);
       setPrice(p);
     });
 
