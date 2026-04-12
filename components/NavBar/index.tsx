@@ -4,7 +4,7 @@ import { IoSettings, IoSunny } from "react-icons/io5";
 
 function NavBar() {
   return (
-    <div className="border border-gray-700 rounded-4xl py-2 px-2 flex justify-between sm:px-6">
+    <div className="border border-gray-700 rounded-4xl py-2 px-2 flex justify-between sm:px-6 sticky top-0 bg-[#111317] w-2/3 self-center z-99">
       <div className="flex gap-3 items-center">
         <div className="inline-block bg-green-400 rounded-full w-3 h-3"></div>
         <Link href={"/"}>

@@ -158,7 +158,7 @@ function Tabs() {
   }, [fetchedData, currentTab]);
 
   return (
-    <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto">
+    <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto hover:bg-[#111317]">
       <div className="p-6">
         {TableTabs.map((tab) => (
           <Button

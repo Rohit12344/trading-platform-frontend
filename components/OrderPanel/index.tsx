@@ -44,7 +44,7 @@ function OrderPanel() {
     fetchAccountInfo();
   }, []);
   return (
-    <div className="border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 hover:shadow-gray-800 hover:shadow-lg transition delay-150">
+    <div className="border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317]">
       <Dropdown
         labelName="Symbol"
         className="border-b border-b-gray-700 pb-4 flex flex-col gap-2"

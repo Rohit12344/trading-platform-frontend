@@ -6,8 +6,8 @@ import Tabs from "@/components/Tabs";
 export default function Home() {
   return (
     <>
+      <NavBar />
       <header className="flex flex-col gap-5">
-        <NavBar />
         <h1 className="col-span-3 text-2xl text-gray-400 tracking-wide text-center">
           Portfolio
         </h1>
