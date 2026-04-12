@@ -2,10 +2,8 @@ import {
   CandleStickData,
   KlineData,
   KlineEvent,
-  Order,
   SingleKlineBar,
   TimeFrame,
-  Trade,
 } from "@/types";
 import { CandlestickData, UTCTimestamp } from "lightweight-charts";
 
@@ -73,80 +71,6 @@ export async function getKlines(
   }
   return response.json() as Promise<KlineData>;
 }
-
-// export async function getAccountInfo(): Promise<AccountInfo> {
-//   const signedUrl = await buildSignedUrl("api/v3/account");
-//   const response = await fetch(signedUrl, {
-//     headers: {
-//       "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
-//     },
-//   });
-//   if (!response.ok) {
-//     throw new Error(`Response status: ${response.status}`);
-//   }
-//   return response.json() as Promise<AccountInfo>;
-// }
-
-export async function getOpenOrders(symbol?: string): Promise<Order[]> {
-  const signedUrl = await buildSignedUrl(
-    "/api/v3/openOrders",
-    symbol ? { symbol } : undefined,
-  );
-  const response = await fetch(signedUrl, {
-    headers: {
-      "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-  return response.json() as Promise<Order[]>;
-}
-
-export async function getTradeHistory(symbol: string): Promise<Trade[]> {
-  const signedUrl = await buildSignedUrl("/api/v3/myTrades", { symbol });
-  const response = await fetch(signedUrl, {
-    headers: {
-      "X-MBX-APIKEY": process.env.BINANCE_API_KEY!,
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-  return response.json() as Promise<Trade[]>;
-}
-
-// interface LimitOrderParam {
-//   timeInForce?: "GTC" | "IOC" | "FOK";
-// }
-// export async function placeOrder({
-//   symbol,
-//   side,
-//   type,
-//   timeInForce,
-//   quantity,
-//   price,
-// }: OrderFormState & LimitOrderParam): Promise<Order> {
-//   const params =
-//     type === "MARKET"
-//       ? { symbol, side, type, quantity }
-//       : { symbol, side, type, quantity, timeInForce, price };
-
-//   const signedUrl = await buildSignedUrl(
-//     "/api/v3/order",
-//     params as Record<string, string>,
-//   );
-//   const response = await fetch(signedUrl, {
-//     method: "POST",
-//     headers: {
-//       "X-MBX-APIKEY": process.env.NEXT_PUBLIC_BINANCE_API_KEY!,
-//     },
-//   });
-//   if (!response.ok) {
-//     throw new Error(`Response status: ${response.status}`);
-//   }
-//   return response.json() as Promise<Order>;
-// }
 
 export function convertKlineToCandlestick(
   kline: SingleKlineBar,

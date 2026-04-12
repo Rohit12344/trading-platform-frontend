@@ -4,6 +4,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+
 function Settings() {
   const router = useRouter();
   const { item: apiKey, setItem: setApiKeyInLocalStorage } =
@@ -14,27 +15,33 @@ function Settings() {
   const [secretkey, setSecretkey] = useState<string>(secretKey || "");
 
   return (
-    <div className="flex flex-col justify-center items-center gap-6 flex-1 ">
+    <div className="flex flex-col gap-6 flex-1 backdrop-blur-3xl">
       <button
         onClick={() => router.back()}
-        className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800"
+        className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800 self-start justify-self-start"
       >
-        Back
+        Back to main page
       </button>
 
       <form
-        onSubmit={() => {
-          toast.success("Keys saved.");
-        }}
         action={(payload) => {
+          if (payload.get("apiKey")?.toString().length !== 64) {
+            toast.error("Please enter a valid API Key.");
+            return;
+          }
+          if (payload.get("secretKey")?.toString().length !== 64) {
+            toast.error("Please enter a valid Secret Key.");
+            return;
+          }
           for (const [key, value] of payload.entries()) {
             if (typeof value === "string") {
               if (key === "apiKey") setApiKeyInLocalStorage(value);
               else setSecretKeyInLocalStorage(value);
             }
           }
+          toast.success("Keys saved.");
         }}
-        className="flex flex-col gap-4 min-w-3xl border border-gray-700 rounded-4xl p-9 hover:shadow-xl bg-[rgba(209, 16, 29, 0.7)] hover:shadow-gray-700"
+        className="flex flex-col self-center gap-7 min-w-3xl border border-gray-700 rounded-4xl p-12 hover:shadow-xl hover:shadow-gray-700 shadow-2xs shadow-blue-400 justify-center"
       >
         <label htmlFor="apiKey">API Key</label>
         <input
@@ -58,12 +65,31 @@ function Settings() {
           onChange={(e) => setSecretkey(e.target.value)}
         ></input>
 
-        <button
-          type="submit"
-          className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800 "
-        >
-          Save Keys
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800 active:transform-[scale(0.9)] active:transition-all active:duration-200"
+          >
+            Save Keys
+          </button>
+
+          <button
+            type="reset"
+            className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800 active:transform-[scale(0.9)] active:transition-all active:duration-200"
+            onClick={async () => {
+              const res = await fetch("/api/account");
+              try {
+                await res.json();
+                toast.success("Connection is active.");
+              } catch (err) {
+                console.log(err);
+                toast.error("Connection failed.");
+              }
+            }}
+          >
+            Test Connection
+          </button>
+        </div>
       </form>
     </div>
   );
