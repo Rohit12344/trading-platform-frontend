@@ -13,12 +13,15 @@ function OrderForm({
   side,
   balance,
   orderSymbol,
+  realTimePrice,
 }: {
   type: string;
   side: OrderSide;
   balance: string;
   orderSymbol: string;
+  realTimePrice: string;
 }) {
+  console.log(type);
   const [price, setPrice] = useState<string | undefined>();
   const [qty, setQty] = useState<string | undefined>();
   const [response, dispatchAction] = useActionState<
@@ -32,7 +35,10 @@ function OrderForm({
   const setOrderTime = useAccountStore((state) => state.setLastOrderTime);
 
   const progress = Math.min(
-    ((Number(price ?? 0) * Number(qty ?? 0)) / 10000) * 100,
+    ((Number(type !== "MARKET" ? (price ?? 0) : (realTimePrice ?? 0)) *
+      Number(qty ?? 0)) /
+      10000) *
+      100,
     100,
   )
     .toFixed(2)
@@ -103,7 +109,11 @@ function OrderForm({
             name="total"
             type="number"
             className="border-0 flex-1 focus:outline-0"
-            value={(Number(price ?? 0) * Number(qty ?? 0)).toString()}
+            value={
+              type !== "MARKET"
+                ? (Number(price ?? 0) * Number(qty ?? 0)).toString()
+                : (Number(realTimePrice ?? 0) * Number(qty ?? 0)).toString()
+            }
             readOnly
           ></Input>
           <span className="mr-4">USDT</span>

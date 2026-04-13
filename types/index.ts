@@ -73,6 +73,7 @@ export interface ApiConfig {
 }
 
 export type OrderSide = "BUY" | "SELL";
+export type OrderTypeDisplayValues = "LIMIT" | "MARKET" | "STOP LIMIT";
 export type OrderType = "MARKET" | "LIMIT" | "STOP_LOSS_LIMIT";
 
 export type TimeFrame = "1m" | "5m" | "1d" | "1w";

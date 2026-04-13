@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Button from "../Button";
 import { OrderSides, OrderTypes, Symbols } from "@/constants";
-import { OrderSide } from "@/types";
+import { OrderSide, OrderType } from "@/types";
 import Tab from "../Tab";
 import OrderForm from "./OrderForm";
 
@@ -11,9 +11,9 @@ import { Balance } from "../../types/index";
 import Dropdown from "../Dropdown";
 import { useAccountStore } from "@/store";
 
-function OrderPanel() {
+function OrderPanel({ realTimePrice }: { realTimePrice: string }) {
   const [orderSide, setOrderSide] = useState<OrderSide>("BUY");
-  const [orderType, setOrderType] = useState<string>("LIMIT");
+  const [orderType, setOrderType] = useState<OrderType>("LIMIT");
   const [balance, setBalance] = useState<string>("0.00 USDT");
 
   const symbol = useAccountStore((state) => state.symbol);
@@ -68,12 +68,12 @@ function OrderPanel() {
         ))}
       </div>
       <div className="border-b border-b-gray-700 ">
-        {OrderTypes.map((type) => (
+        {Object.entries(OrderTypes).map((ot) => (
           <Tab
-            content={type}
-            key={type}
-            onClick={() => setOrderType(type)}
-            isSelected={orderType === type}
+            content={ot[0]}
+            key={ot[0]}
+            onClick={() => setOrderType(ot[1])}
+            isSelected={orderType === ot[1]}
           ></Tab>
         ))}
       </div>
@@ -83,6 +83,7 @@ function OrderPanel() {
         side={orderSide}
         type={orderType}
         balance={balance}
+        realTimePrice={realTimePrice}
       />
     </div>
   );

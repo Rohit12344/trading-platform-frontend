@@ -15,9 +15,8 @@ import { useAccountStore } from "@/store";
 import PositionTable from "../Table/PositionTable";
 import TradeTable from "../Table/TradeTable";
 import OrderTable from "../Table/OrderTable";
-import { useWebSocket } from "@/hooks/useWebSocket";
 
-function Tabs() {
+function Tabs({ realTimePrice }: { realTimePrice: string }) {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
   const [fetchedData, setFetchedData] = useState<Trade[]>();
   const [fetchedOrderData, setFetchedOrderData] = useState<Order[]>();
@@ -28,8 +27,6 @@ function Tabs() {
   const symbol = useAccountStore((state) => state.symbol);
   const orderTime = useAccountStore((state) => state.lastOrderTime);
   const theme = useAccountStore((state) => state.theme);
-
-  const { price } = useWebSocket(symbol.toLowerCase());
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -103,10 +100,10 @@ function Tabs() {
                   symbol: positionsData.symbol,
                   size: `+${positionsData.qty}`,
                   price: positionsData.price,
-                  marketPrice: Number(price),
+                  marketPrice: Number(realTimePrice),
                   unrealizedPnl: Number(
                     (
-                      (Number(price) - Number(positionsData.price)) *
+                      (Number(realTimePrice) - Number(positionsData.price)) *
                       Number(positionsData.qty)
                     ).toFixed(6),
                   ),
@@ -116,7 +113,7 @@ function Tabs() {
         );
       }
     }
-  }, [fetchedData, currentTab, price]);
+  }, [fetchedData, currentTab, realTimePrice]);
 
   useEffect(() => {
     if (fetchedData) {
@@ -179,7 +176,7 @@ function Tabs() {
             return (
               <PositionTable
                 data={
-                  price
+                  realTimePrice
                     ? ((tableData as PositionsTableType[]) ?? [])
                     : undefined
                 }

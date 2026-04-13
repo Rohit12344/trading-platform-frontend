@@ -19,7 +19,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { useShallow } from "zustand/shallow";
 import RealTimePriceDisplay from "./RealTimePriceDisplay";
 
-function Chart() {
+function Chart({ realTimePrice }: { realTimePrice: string }) {
   const [timeframe, setTimeframe] = useState<TimeFrame>("1m");
   const [initialPrice, setInitialPrice] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -27,8 +27,6 @@ function Chart() {
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | undefined>(undefined);
   const symbol = useAccountStore(useShallow((state) => state.symbol));
   const theme = useAccountStore((state) => state.theme);
-
-  const { price } = useWebSocket(symbol.toLowerCase());
 
   useEffect(() => {
     const chartOptions = {
@@ -91,7 +89,6 @@ function Chart() {
     return () => wsStream.close();
   }, [timeframe, symbol, theme]);
 
-  console.log(initialPrice, price);
   return (
     <div
       className={`border border-gray-700 rounded-4xl w-full p-6 flex flex-col gap-6 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317] ${theme === "light" ? "hover:bg-gray-200" : ""}`}
@@ -100,7 +97,9 @@ function Chart() {
         <div className="flex flex-col gap-4">
           <RealTimePriceDisplay
             symbol={symbol}
-            price={price === "" ? initialPrice.toString() : price}
+            price={
+              realTimePrice === "" ? initialPrice.toString() : realTimePrice
+            }
           />
         </div>
 

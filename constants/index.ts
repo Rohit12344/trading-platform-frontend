@@ -1,8 +1,19 @@
-import { OrderSide, TableTabsType, TimeFrame } from "@/types";
+import {
+  OrderSide,
+  OrderType,
+  OrderTypeDisplayValues,
+  TableTabsType,
+  TimeFrame,
+} from "@/types";
 
 export const TimeFrames: TimeFrame[] = ["1m", "5m", "1d", "1w"];
 export const OrderSides: OrderSide[] = ["BUY", "SELL"];
-export const OrderTypes: string[] = ["LIMIT", "MARKET", "STOP MARKET"];
+
+export const OrderTypes: Record<OrderTypeDisplayValues, OrderType> = {
+  LIMIT: "LIMIT",
+  MARKET: "MARKET",
+  "STOP LIMIT": "STOP_LOSS_LIMIT",
+};
 export const TableTabs: TableTabsType[] = ["Positions", "Orders", "Trades"];
 
 export const TableColumns: Record<TableTabsType, string[]> = {
