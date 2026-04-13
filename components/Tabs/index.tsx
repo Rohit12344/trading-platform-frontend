@@ -15,6 +15,7 @@ import { useAccountStore } from "@/store";
 import PositionTable from "../Table/PositionTable";
 import TradeTable from "../Table/TradeTable";
 import OrderTable from "../Table/OrderTable";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 function Tabs() {
   const [currentTab, setCurrentTab] = useState<TableTabsType>("Positions");
@@ -25,11 +26,13 @@ function Tabs() {
   >();
 
   const symbol = useAccountStore((state) => state.symbol);
-  const marketPrice = useAccountStore((state) => state.marketPrice);
-  const currentSymbolPrice = useRef(marketPrice);
-  currentSymbolPrice.current = marketPrice;
+  // const marketPrice = useAccountStore((state) => state.marketPrice);
+  // const currentSymbolPrice = useRef(marketPrice);
+  // currentSymbolPrice.current = marketPrice;
   const orderTime = useAccountStore((state) => state.lastOrderTime);
   const theme = useAccountStore((state) => state.theme);
+
+  const { price } = useWebSocket(symbol.toLowerCase());
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -104,20 +107,20 @@ function Tabs() {
                   symbol: positionsData.symbol,
                   size: `+${positionsData.qty}`,
                   price: positionsData.price,
-                  marketPrice:
-                    currentSymbolPrice.current > 0
-                      ? currentSymbolPrice.current
-                      : marketPrice,
-                  unrealizedPnl:
-                    (currentSymbolPrice.current - Number(positionsData.price)) *
-                    Number(positionsData.qty),
+                  marketPrice: Number(price),
+                  unrealizedPnl: Number(
+                    (
+                      (Number(price) - Number(positionsData.price)) *
+                      Number(positionsData.qty)
+                    ).toFixed(6),
+                  ),
                 },
               ]
             : [],
         );
       }
     }
-  }, [fetchedData, currentTab, marketPrice]);
+  }, [fetchedData, currentTab, price]);
 
   useEffect(() => {
     if (fetchedData) {

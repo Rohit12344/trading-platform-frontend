@@ -1,6 +1,7 @@
 "use client";
 
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useAccountStore } from "@/store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -13,12 +14,13 @@ function Settings() {
     useLocalStorage("secret-key");
   const [apikey, setApikey] = useState<string>(apiKey || "");
   const [secretkey, setSecretkey] = useState<string>(secretKey || "");
+  const theme = useAccountStore((state) => state.theme);
 
   return (
     <div className="flex flex-col gap-6 flex-1 backdrop-blur-3xl">
       <button
         onClick={() => router.back()}
-        className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800 self-start justify-self-start"
+        className={`border border-gray-600 px-4 py-2 cursor-pointer w-fit  self-start justify-self-start ${theme === "light" ? "hover:bg-gray-400" : "hover:bg-gray-800"}`}
       >
         Back to main page
       </button>
@@ -68,14 +70,14 @@ function Settings() {
         <div className="flex gap-4">
           <button
             type="submit"
-            className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800 active:transform-[scale(0.9)] active:transition-all active:duration-200"
+            className={`border border-gray-600 px-4 py-2 cursor-pointer w-fit  active:transform-[scale(0.9)] active:transition-all active:duration-200 ${theme === "light" ? "hover:bg-gray-400" : "hover:bg-gray-800"}`}
           >
             Save Keys
           </button>
 
           <button
             type="reset"
-            className="border border-gray-600 px-4 py-2 cursor-pointer w-fit hover:bg-gray-800 active:transform-[scale(0.9)] active:transition-all active:duration-200"
+            className={`border border-gray-600 px-4 py-2 cursor-pointer w-fit  active:transform-[scale(0.9)] active:transition-all active:duration-200 ${theme === "light" ? "hover:bg-gray-400" : "hover:bg-gray-800"}`}
             onClick={async () => {
               const res = await fetch("/api/account");
               try {

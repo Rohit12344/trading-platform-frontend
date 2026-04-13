@@ -33,14 +33,14 @@ function NavBar() {
       </div>
 
       <div className="flex gap-2 items-center sm:gap-4">
-        <div className="rounded-2xl bg-gray-800 px-4 h-full flex items-center gap-3">
+        <div className="rounded-2xl bg-gray-800 sm:px-4 h-full hidden sm:flex sm:items-center sm:gap-3 sm:visible">
           {" "}
-          <div className="inline-block bg-green-400 rounded-full w-3 h-3"></div>{" "}
-          <span>Testnet</span>
+          <div className="inline-block bg-green-400 rounded-full sm:w-3  sm:h-3"></div>{" "}
+          <span className="">Testnet</span>
         </div>
 
         <div
-          className="rounded-full bg-gray-800 cursor-pointer flex items-center p-2"
+          className="rounded-full bg-gray-800 cursor-pointer flex items-center p-1 sm:p-2"
           onClick={() => {
             if (theme === "dark") {
               setTheme("light");
@@ -49,16 +49,16 @@ function NavBar() {
             }
           }}
         >
-          <IoSunny className="w-6 h-6"></IoSunny>
+          <IoSunny className="w-4 h-4 sm:w-6 sm:h-6"></IoSunny>
         </div>
 
-        <div className="rounded-full bg-gray-800 cursor-pointer flex items-center p-2">
+        <div className="rounded-full bg-gray-800 cursor-pointer flex items-center  p-1 sm:p-2">
           <Link href={"/settings"}>
-            <IoSettings className="w-6 h-6"></IoSettings>
+            <IoSettings className="w-4 h-4 sm:w-6 sm:h-6"></IoSettings>
           </Link>
         </div>
 
-        <div className="rounded-full bg-gray-800 p-3 flex items-center">
+        <div className="rounded-full bg-gray-800 p-1 sm:p-3 flex items-center">
           <span className="text-xs">RG</span>
         </div>
       </div>

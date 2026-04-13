@@ -93,7 +93,7 @@ function Chart() {
     <div
       className={`border border-gray-700 rounded-4xl w-full p-6 flex flex-col gap-6 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317] ${theme === "light" ? "hover:bg-gray-200" : ""}`}
     >
-      <div className="flex justify-between align-top ">
+      <div className="flex justify-between align-top flex-col gap-4 sm:flex-row sm:gap-0">
         <div className="flex flex-col gap-4">
           <RealTimePriceDisplay
             symbol={symbol}
