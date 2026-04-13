@@ -1,3 +1,5 @@
+"use server";
+
 import { buildSignedUrl } from "@/lib/binance";
 
 export async function GET() {
