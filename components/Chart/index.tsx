@@ -26,16 +26,14 @@ function Chart() {
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | undefined>(undefined);
   const symbol = useAccountStore(useShallow((state) => state.symbol));
-  // const setInitialPrice = useAccountStore(
-  //   useShallow((state) => state.setMarketPrice),
-  // );
+  const theme = useAccountStore((state) => state.theme);
 
   const { price } = useWebSocket(symbol.toLowerCase());
   useEffect(() => {
     const chartOptions = {
       layout: {
-        background: { color: "#0d0f14" },
-        textColor: "#94a3b8",
+        background: { color: theme === "light" ? "#ffffff" : "#0d0f14" },
+        textColor: theme === "light" ? "black" : "#94a3b8",
       },
       grid: {
         vertLines: { color: "#1e2330" },
@@ -56,7 +54,7 @@ function Chart() {
     chartRef.current = chart;
 
     return () => chart?.remove();
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +73,7 @@ function Chart() {
       }
     };
     fetchData();
-  }, [timeframe, symbol]);
+  }, [timeframe, symbol, theme]);
 
   useEffect(() => {
     const wsStream = new WebSocket(
@@ -89,10 +87,12 @@ function Chart() {
     });
 
     return () => wsStream.close();
-  }, [timeframe, symbol]);
+  }, [timeframe, symbol, theme]);
 
   return (
-    <div className="border border-gray-700 rounded-4xl w-full p-6 flex flex-col gap-6 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317]">
+    <div
+      className={`border border-gray-700 rounded-4xl w-full p-6 flex flex-col gap-6 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317] ${theme === "light" ? "hover:bg-gray-200" : ""}`}
+    >
       <div className="flex justify-between align-top ">
         <div className="flex flex-col gap-4">
           <RealTimePriceDisplay

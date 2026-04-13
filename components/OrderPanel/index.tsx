@@ -18,6 +18,7 @@ function OrderPanel() {
 
   const symbol = useAccountStore((state) => state.symbol);
   const setSymbol = useAccountStore((state) => state.setSymbol);
+  const theme = useAccountStore((state) => state.theme);
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -44,7 +45,9 @@ function OrderPanel() {
     fetchAccountInfo();
   }, []);
   return (
-    <div className="border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317]">
+    <div
+      className={`border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317] ${theme === "light" ? "hover:bg-gray-200" : ""}`}
+    >
       <Dropdown
         labelName="Symbol"
         className="border-b border-b-gray-700 pb-4 flex flex-col gap-2"

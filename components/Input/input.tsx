@@ -24,7 +24,7 @@ function Input({
       id={name}
       name={name}
       type={type}
-      className={`border border-gray-800 px-4 py-2 min-w-5 ${className}`}
+      className={`border border-gray-800 px-4 py-2 min-w-5  ${className}`}
       value={value}
       onChange={onInputChange}
       readOnly={readOnly}

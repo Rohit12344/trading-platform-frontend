@@ -29,6 +29,7 @@ function Tabs() {
   const currentSymbolPrice = useRef(marketPrice);
   currentSymbolPrice.current = marketPrice;
   const orderTime = useAccountStore((state) => state.lastOrderTime);
+  const theme = useAccountStore((state) => state.theme);
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -158,7 +159,9 @@ function Tabs() {
   }, [fetchedData, currentTab]);
 
   return (
-    <div className="border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto hover:bg-[#111317]">
+    <div
+      className={`border border-gray-700 rounded-4xl flex flex-col hover:shadow-gray-800 hover:shadow-lg transition delay-150 overflow-auto hover:bg-[#111317] ${theme === "light" ? "hover:bg-gray-200" : ""}`}
+    >
       <div className="p-6">
         {TableTabs.map((tab) => (
           <Button

@@ -67,7 +67,7 @@ function OrderForm({
       {type !== "MARKET" && (
         <div className="col-span-2 flex flex-col gap-2">
           <label htmlFor="price">Price</label>
-          <div className="border border-gray-700 flex items-center w-full">
+          <div className="border border-gray-700 flex items-center w-full ">
             <Input
               name="price"
               type="number"

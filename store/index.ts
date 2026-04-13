@@ -6,10 +6,12 @@ export interface StoreState {
   marketPrice: number;
   accountInfo: AccountInfo | null;
   lastOrderTime: string | null;
+  theme: string;
   setMarketPrice: (newPrice: number) => void;
   setSymbol: (newSymbol: string) => void;
   setAccountInfo: (newAccountInfo: AccountInfo) => void;
   setLastOrderTime: (newOrderInfo: string) => void;
+  setTheme: (newTheme: string) => void;
 }
 
 export const useAccountStore = create<StoreState>((set) => ({
@@ -17,6 +19,7 @@ export const useAccountStore = create<StoreState>((set) => ({
   marketPrice: 0,
   accountInfo: null,
   lastOrderTime: null,
+  theme: "dark",
   setMarketPrice: (newPrice) =>
     set(() => ({
       marketPrice: newPrice,
@@ -32,5 +35,9 @@ export const useAccountStore = create<StoreState>((set) => ({
   setLastOrderTime: (newOrderTime) =>
     set(() => ({
       lastOrderTime: newOrderTime,
+    })),
+  setTheme: (newTheme) =>
+    set(() => ({
+      theme: newTheme,
     })),
 }));
