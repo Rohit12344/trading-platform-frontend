@@ -1,7 +1,7 @@
 "use client";
 
 import { TableColumns, TableTabs } from "@/constants";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button";
 import {
   Order,
@@ -26,9 +26,6 @@ function Tabs() {
   >();
 
   const symbol = useAccountStore((state) => state.symbol);
-  // const marketPrice = useAccountStore((state) => state.marketPrice);
-  // const currentSymbolPrice = useRef(marketPrice);
-  // currentSymbolPrice.current = marketPrice;
   const orderTime = useAccountStore((state) => state.lastOrderTime);
   const theme = useAccountStore((state) => state.theme);
 
@@ -67,7 +64,6 @@ function Tabs() {
         }
 
         const data: Order[] = await res.json();
-        console.log(data);
         setFetchedOrderData(data);
       } catch (err) {
         console.log(err);

@@ -6,7 +6,6 @@ export function useWebSocket(symbol: string): {
   connectionStatus: ConnectionStatus;
   price: string;
 } {
-  // const setMarketPrice = useAccountStore((state) => state.setMarketPrice);
   const [status, setStatus] = useState<ConnectionStatus>(0);
   const [price, setPrice] = useState<string>("");
   useEffect(() => {
@@ -15,6 +14,7 @@ export function useWebSocket(symbol: string): {
     );
     ws.addEventListener("message", (event) => {
       if (ws.readyState !== WebSocket.OPEN) return;
+      setStatus(WebSocket.OPEN);
       const { p } = JSON.parse(event.data);
       setPrice(p);
     });
