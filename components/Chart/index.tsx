@@ -58,6 +58,7 @@ function Chart() {
   }, [theme]);
 
   useEffect(() => {
+    seriesRef?.current?.priceScale().setAutoScale(true);
     const fetchData = async () => {
       try {
         const data = await getKlines(symbol, timeframe, 100);
@@ -90,7 +91,7 @@ function Chart() {
     return () => wsStream.close();
   }, [timeframe, symbol, theme]);
 
-  console.log(initialPrice);
+  console.log(initialPrice, price);
   return (
     <div
       className={`border border-gray-700 rounded-4xl w-full p-6 flex flex-col gap-6 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317] ${theme === "light" ? "hover:bg-gray-200" : ""}`}

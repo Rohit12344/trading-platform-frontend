@@ -31,7 +31,10 @@ export function useWebSocket(symbol: string): {
       console.log(e);
     });
 
-    return () => ws.close();
+    return () => {
+      ws.close();
+      setPrice("");
+    };
   }, [symbol, setPrice]);
 
   return {

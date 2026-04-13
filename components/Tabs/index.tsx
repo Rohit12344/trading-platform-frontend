@@ -178,7 +178,11 @@ function Tabs() {
           if (currentTab === "Positions") {
             return (
               <PositionTable
-                data={(tableData as PositionsTableType[]) ?? []}
+                data={
+                  price
+                    ? ((tableData as PositionsTableType[]) ?? [])
+                    : undefined
+                }
               ></PositionTable>
             );
           } else if (currentTab === "Trades") {
