@@ -19,6 +19,7 @@ function OrderPanel({ realTimePrice }: { realTimePrice: string }) {
   const symbol = useAccountStore((state) => state.symbol);
   const setSymbol = useAccountStore((state) => state.setSymbol);
   const theme = useAccountStore((state) => state.theme);
+  const lastOrderTime = useAccountStore((state) => state.lastOrderTime);
 
   useEffect(() => {
     const fetchAccountInfo = async () => {
@@ -43,7 +44,7 @@ function OrderPanel({ realTimePrice }: { realTimePrice: string }) {
       }
     };
     fetchAccountInfo();
-  }, []);
+  }, [lastOrderTime]);
   return (
     <div
       className={`border border-gray-700 p-6 rounded-4xl flex flex-col gap-4 hover:shadow-gray-800 hover:shadow-lg transition delay-150 hover:bg-[#111317] ${theme === "light" ? "hover:bg-gray-200" : ""}`}

@@ -21,7 +21,6 @@ function OrderForm({
   orderSymbol: string;
   realTimePrice: string;
 }) {
-  console.log(type);
   const [price, setPrice] = useState<string | undefined>();
   const [qty, setQty] = useState<string | undefined>();
   const [response, dispatchAction] = useActionState<
@@ -32,6 +31,7 @@ function OrderForm({
   });
   const assetName = orderSymbol.replace("USDT", "");
   const formElement = useRef<HTMLFormElement>(null);
+
   const setOrderTime = useAccountStore((state) => state.setLastOrderTime);
 
   const progress = Math.min(
