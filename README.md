@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Numatix Trading Platform
+
+A responsive crypto trading interface built with Next.js, TypeScript, Zustand, and Binance Spot Testnet. The app streams real-time prices, renders candlestick charts, places testnet orders, and surfaces positions, trades, and open orders in a desktop-style trading workspace.
+
+## Features
+
+- Real-time ticker updates over Binance WebSocket streams
+- Candlestick charting with timeframe switching via `lightweight-charts`
+- Market and limit order entry against Binance Spot Testnet
+- Portfolio views for positions, trade history, and open orders
+- Shared state management with Zustand for symbol and account context
+- Settings page for testnet credential management and connection checks
+- Responsive layout designed for both large screens and smaller devices
+
+## Tech Stack
+
+- Next.js App Router
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- Zustand
+- Binance Spot Testnet REST and WebSocket APIs
+- `lightweight-charts`
+
+## Architecture Overview
+
+The UI is split into three main areas:
+
+- Order entry panel for symbol selection and trade submission
+- Chart area for historical candles plus live kline updates
+- Portfolio tabs for positions, orders, and trades
+
+Key implementation choices:
+
+- Real-time pricing is handled through a custom WebSocket hook in `hooks/useWebSocket.ts`
+- Signed Binance requests are generated in `lib/binance.ts` with HMAC-SHA256
+- Account, theme, selected symbol, and order refresh timing are coordinated through a Zustand store
+- Authenticated REST calls are proxied through Next.js route handlers under `app/api/*`
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Create local environment variables
+
+Copy `.env.example` to `.env.local` and fill in your Binance Spot Testnet credentials.
+
+Required variables:
+
+- `NEXT_PUBLIC_BINANCE_TESTNET_URL`
+- `NEXT_PUBLIC_SERVER_URL`
+- `BINANCE_API_KEY`
+- `BINANCE_SECRET_KEY`
+
+### 3. Run the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev
+npm run lint
+npm run build
+npm run start
+```
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
+- This project is intended for Binance Spot Testnet, not live trading.
+- API keys should remain in `.env.local`, which is ignored by git.
+- The settings page stores credentials in browser local storage for testnet convenience only.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Add a richer README demo section with screenshots or a short walkthrough video
+- Improve loading and empty states across data-heavy components
+- Add automated tests for signing, order payload handling, and data transforms
+- Support URL-based symbol routing and deeper trade analytics

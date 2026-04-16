@@ -15,7 +15,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import TimeFrameSelector from "../TimeFrameSelector";
 import { useAccountStore } from "@/store";
-import { useWebSocket } from "@/hooks/useWebSocket";
 import { useShallow } from "zustand/shallow";
 import RealTimePriceDisplay from "./RealTimePriceDisplay";
 
