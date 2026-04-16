@@ -82,11 +82,11 @@ npm run start
 ## Screenshots
 
 - Live site in Dark mode
-<img width="1900" height="1263" alt="Live site screenshot - Dark Mode" src="https://github.com/user-attachments/assets/f7dc8ccf-cb5e-4ade-92c0-477d95ab2148" />
+<img width="1900" height="1460" alt="localhost_3000_ (4)" src="https://github.com/user-attachments/assets/53f92d8d-7792-4f46-b260-d02ddb5ff754" />
 
-- Live site inLight mode
-<img width="1900" height="1263" alt="Live site screenshot - Light Mode" src="https://github.com/user-attachments/assets/f1e154ae-767b-43b7-9cb1-460961c2d033" />
 
+- Live site in Light mode
+<img width="1900" height="1460" alt="localhost_3000_ (3)" src="https://github.com/user-attachments/assets/01d91234-9400-4dc4-86f2-02655790f1d5" />
 
 ## Future Improvements
 
