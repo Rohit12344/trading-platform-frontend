@@ -79,6 +79,15 @@ npm run start
 - API keys should remain in `.env.local`, which is ignored by git.
 - The settings page stores credentials in browser local storage for testnet convenience only.
 
+## Screenshots
+
+- Live site in Dark mode
+<img width="1900" height="1263" alt="Live site screenshot - Dark Mode" src="https://github.com/user-attachments/assets/f7dc8ccf-cb5e-4ade-92c0-477d95ab2148" />
+
+- Live site inLight mode
+<img width="1900" height="1263" alt="Live site screenshot - Light Mode" src="https://github.com/user-attachments/assets/f1e154ae-767b-43b7-9cb1-460961c2d033" />
+
+
 ## Future Improvements
 
 - Add a richer README demo section with screenshots or a short walkthrough video
